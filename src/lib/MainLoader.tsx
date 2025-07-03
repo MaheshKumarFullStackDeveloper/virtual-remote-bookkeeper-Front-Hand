@@ -9,9 +9,15 @@ export default function MainLoader() {
       <div className="flex flex-col items-center">
 
 
-        <Image priority
+        <Image
+          src="/theme_images/virtualremote-loader.jpg"
+          alt="loader image"
+          width={150}
+          height={150}
+          priority
+          fetchPriority="high"
           sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
-          src='/theme_images/virtualremote-loader.jpg' alt="loader image" width={150} height={150} />
+        />
 
 
 
