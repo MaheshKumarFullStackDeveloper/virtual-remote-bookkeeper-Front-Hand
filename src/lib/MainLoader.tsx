@@ -4,12 +4,14 @@ import Image from "next/image";
 
 export default function MainLoader() {
   return (
-    
+
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-300 bg-opacity-80 backdrop-blur-md">
       <div className="flex flex-col items-center">
- 
 
-<Image src='/theme_images/virtualremote-loader.jpg' alt="loader image" width={150} height={150}/>
+
+        <Image priority
+          sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+          src='/theme_images/virtualremote-loader.jpg' alt="loader image" width={150} height={150} />
 
 
 

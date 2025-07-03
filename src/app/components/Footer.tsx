@@ -31,7 +31,9 @@ function Footer() {
                 href="/"
                 className="flex-1 justify-start items-left mb-[6px]"
               >
-                {footerLogo !== null ? (<Image
+                {footerLogo !== null ? (<Image priority
+                  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
                   src={footerLogo}
                   width={134}
                   height={134}

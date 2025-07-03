@@ -18,20 +18,20 @@ const Carousel = ({ slides }: { slides: Slide[] }) => {
   });
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  
+
   useEffect(() => {
     const autoScroll = setInterval(() => {
-        
-        if (emblaApi) {
-          emblaApi.scrollNext(); // Move to the next slide
-          emblaApi.on("scroll", () => setSelectedIndex(emblaApi.selectedScrollSnap()));
-        }
-      }, 5000); // Auto-scroll every 2 seconds
-  
-      return () => {
-        clearInterval(autoScroll); // Clean up the interval
-      };
-  
+
+      if (emblaApi) {
+        emblaApi.scrollNext(); // Move to the next slide
+        emblaApi.on("scroll", () => setSelectedIndex(emblaApi.selectedScrollSnap()));
+      }
+    }, 5000); // Auto-scroll every 2 seconds
+
+    return () => {
+      clearInterval(autoScroll); // Clean up the interval
+    };
+
   }, [emblaApi]);
 
   return (
@@ -40,15 +40,17 @@ const Carousel = ({ slides }: { slides: Slide[] }) => {
         <div className="flex max-w-[430px] w-full">
           {slides.map((slide, index) => (
             <div key={index} className="flex-none w-full relative">
-              <Image
-                 width={500}
-              height={300}
+              <Image priority
+                sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
+                width={500}
+                height={300}
                 src={`/blogs/${slide.photo}` || "/default-image.png"}
                 alt={`Slide ${index + 1}`}
                 className=""
               />
               <div className="  w-full  text-white py-4">
-                 <p className=" tracking-[0.25rem] uppercase mb-0.5 rounded-[0px] text-[#596475] text-[1rem]">{slide.created}</p>
+                <p className=" tracking-[0.25rem] uppercase mb-0.5 rounded-[0px] text-[#596475] text-[1rem]">{slide.created}</p>
                 <a
                   href={slide.slug}
                   className="line-clamp-2 underline-offset-0 text-[30px] mt-[0px] rounded-[30px] text-[#020202] "

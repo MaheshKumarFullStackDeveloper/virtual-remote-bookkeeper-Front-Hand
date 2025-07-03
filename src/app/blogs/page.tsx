@@ -81,7 +81,9 @@ const Page: React.FC = () => {
           <div className=" grid  grid-cols-1  min-[460px]:grid-cols-2  md:grid-cols-3  gap-3   max-w-[95%] justify-between m-auto  text-center  ">
             {posts.map((post, index) => (
               <div key={index} className=" ">
-                <Image
+                <Image priority
+                  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
                   src={`${post.image}` || "/default-image.png"}
                   width={419}
                   height={223}
