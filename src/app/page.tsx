@@ -1,6 +1,6 @@
 
 import MainLoader from "@/lib/MainLoader";
-//import BlankHtmlView from "./components/sectionsView/BlankHtmlView";
+import BlankHtmlView from "./components/sectionsView/BlankHtmlView";
 import LeftSideImageRightSideContactFormView from "./components/sectionsView/LeftSideImageRightSideContactFormView";
 import LeftSideTextRightSideImageView from "./components/sectionsView/LeftSideTextRightSideImageView";
 import OneRowThreeColumnView from "./components/sectionsView/OneRowThreeColumnView";
@@ -15,7 +15,7 @@ import LatestBlogArticle from "./components/LatestBlogArticle";
 import React from "react";
 
 
-const basenewUrl = process.env.NEXT_PUBLIC_API;
+const basenewUrl = process.env.NEXT_PUBLIC_API; // Load from .env 
 
 
 const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
@@ -66,7 +66,7 @@ export default async function Home() {
       <>
         {sections && sections.map((section: Sections, index) => (
           <React.Fragment key={index}>
-            {/*    {section.title === 'BlankHtml' && <BlankHtmlView content={section.content} />} */}
+            {section.title === 'BlankHtml' && <BlankHtmlView content={section.content} />}
             {section.title === 'LeftSideImageRightSideContactForm' && <LeftSideImageRightSideContactFormView content={section.content} />}
             {section.title === 'LeftSideTextRightSideImage' && <LeftSideTextRightSideImageView content={section.content} />}
             {section.title === 'OneRowThreeColumn' && <OneRowThreeColumnView content={section.content} />}

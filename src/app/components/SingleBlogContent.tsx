@@ -45,7 +45,7 @@ async function SingleBlogContent({ blogData }: CommonPageTemplateProps) {
         </div>
         <div className="flex flex-col md:flex-row max-w-[1370px] gap-10 w-full m-auto">
           <div className="flex-8 shadow-[10px_10px_50px_rgba(0,0,0,0.05)] mb-3">
-            <Image priority
+            <Image quality={90} priority
               sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
               src={`${blogData?.image}` || "/default-image.png"}
