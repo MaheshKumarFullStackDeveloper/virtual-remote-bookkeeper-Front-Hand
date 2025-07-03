@@ -1,0 +1,78 @@
+	<NavigationMenu.Root  className=" block md:hidden lg:hidden NavigationMenuRoot">
+			<NavigationMenu.List className={`NavigationMenuList ${device}`}>
+			    <NavigationMenu.Item>
+					<NavigationMenu.Link
+						className={`NavigationMenuLink ${pathname === "/quickbooks-bookkeeping-services" ? "active" : ""}`}						href="/quickbooks-bookkeeping-services"
+					>
+						QuickBooks bookkeeping 
+					</NavigationMenu.Link>
+				</NavigationMenu.Item>
+			    <NavigationMenu.Item>
+					<NavigationMenu.Link
+						className={`NavigationMenuLink ${pathname === "/zoho-bookkeeping" ? "active" : ""}`}		
+						href="/zoho-bookkeeping"
+					>
+						Zoho Bookkeeping
+					</NavigationMenu.Link>
+				</NavigationMenu.Item>
+			    <NavigationMenu.Item>
+					<NavigationMenu.Link
+						className={`NavigationMenuLink ${pathname === "/xero-bookkeeping-services" ? "active" : ""}`}		
+						href="/xero-bookkeeping-services"
+					>
+						Xero bookkeeping
+					</NavigationMenu.Link>
+				</NavigationMenu.Item>
+			  
+
+				<NavigationMenu.Item>
+					<NavigationMenu.Trigger className={`NavigationMenuTrigger ${pathname === "/accounting-services"  ? "active" : ""} ${pathname === "/accountant-for-doctors"  ? "active" : ""} ${pathname === "/accountant-for-medical-practitioners"  ? "active" : ""} ${pathname === "/accountant-for-psychotherapists"  ? "active" : ""} ${pathname === "/accountant-for-counsellors"  ? "active" : ""} ${pathname === "/accountant-for-physicians"  ? "active" : ""} `}>
+					<Link style={{marginTop:'-3px'}}
+						
+						href="/accounting-services"
+					>Accounting Services</Link> <CaretDownIcon className="CaretDown" aria-hidden />
+					</NavigationMenu.Trigger>
+					<NavigationMenu.Content className="NavigationMenuContent">
+						<ul className="List one">
+							
+							<ListItem href="/accountant-for-doctors" title="Accountant for doctor"></ListItem>
+							<ListItem href="/accountant-for-therapist" title="Accountant for therapist"></ListItem>
+							<ListItem href="/accountant-for-medical-practitioners" title="Accountant for medical practitioners"></ListItem>
+							<ListItem href="/accountant-for-psychotherapists" title="Accountant for psychotherapists"></ListItem>
+							<ListItem href="/accountant-for-counsellors" title="Accountant for counsellors"></ListItem>
+							<ListItem href="/accountant-for-physicians" title="Accountant for Physicians"></ListItem>
+							
+						</ul>
+					</NavigationMenu.Content>
+				</NavigationMenu.Item>
+
+				<NavigationMenu.Item>
+					<NavigationMenu.Trigger className={`NavigationMenuTrigger ${pathname === "/professionals-bookkeeping-services"  ? "active" : ""}  ${pathname === "/bookkeeping-for-doctors"  ? "active" : ""}  ${pathname === "/bookkeeping-for-therapist"  ? "active" : ""}  ${pathname === "/bookkeeping-for-medical-practitioners"  ? "active" : ""}  ${pathname === "/bookkeeping-for-psychotherapists"  ? "active" : ""}  ${pathname === "/bookkeeping-for-counsellors"  ? "active" : ""}  ${pathname === "/bookkeeping-for-physicians"  ? "active" : ""}`}>
+					<Link style={{marginTop:'-3px'}}
+							
+						href="/professionals-bookkeeping-services"
+					> Professionals Bookkeeping</Link>     <CaretDownIcon className="CaretDown" aria-hidden />
+					</NavigationMenu.Trigger>
+					<NavigationMenu.Content className="NavigationMenuContent">
+						<ul className="List two">
+						   <ListItem href="/bookkeeping-for-doctors" title="bookkeeping services for Doctor"></ListItem>
+						   <ListItem href="/bookkeeping-for-therapist" title="bookkeeping services for Therapist"></ListItem>
+						   <ListItem href="/bookkeeping-for-medical-practitioners" title="bookkeeping for Medical Practitioners"></ListItem>
+						   <ListItem href="/bookkeeping-for-psychotherapists" title="bookkeeping for Psychotherapists"></ListItem>
+						   <ListItem href="/bookkeeping-for-counsellors" title="bookkeeping for Counsellors"></ListItem>
+						   <ListItem href="/bookkeeping-for-physicians" title="bookkeeping for Physicians"></ListItem>
+						</ul>
+					</NavigationMenu.Content>
+				</NavigationMenu.Item>
+
+			
+		
+				<NavigationMenu.Indicator className="NavigationMenuIndicator">
+					<div className="Arrow" />
+				</NavigationMenu.Indicator>
+			</NavigationMenu.List>
+
+			<div className="ViewportPosition">
+				<NavigationMenu.Viewport className="NavigationMenuViewport " />
+			</div>
+		</NavigationMenu.Root>
