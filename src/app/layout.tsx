@@ -56,7 +56,9 @@ export default async function RootLayout({
   };
 
   return (
+
     <Suspense fallback={<MainLoader />}>
+      <!DOCTYPE html>
       <html lang="en" suppressHydrationWarning>
         <body
           className={`${poppins.className} ${roboto.className} ${dmSans.className}`}
