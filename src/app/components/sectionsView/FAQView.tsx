@@ -38,8 +38,7 @@ const fetchFaqs = async (
     }
   });
   const response = await res.json();
-  console.log("FAQ responce", response);
-  console.log("FAQ url", `${baseUrl}/faq?page=1&limit=${limit}`);
+
   return { data: response.data.faqsList };
 };
 export default function FAQView({ content }: AddProps): React.JSX.Element {
