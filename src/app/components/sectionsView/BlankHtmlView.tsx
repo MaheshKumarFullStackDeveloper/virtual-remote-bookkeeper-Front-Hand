@@ -8,6 +8,7 @@ type BlankHtml = {
   description: string;
 };
 
+import DOMPurify from 'dompurify';
 
 export default function BlankHtmlView({ content }: AddProps): React.JSX.Element {
 
@@ -27,7 +28,7 @@ export default function BlankHtmlView({ content }: AddProps): React.JSX.Element 
 
   return (<>
     <div
-      dangerouslySetInnerHTML={{ __html: contentData?.description || "" }}
+      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(contentData?.description || "") }}
     />
   </>)
 
