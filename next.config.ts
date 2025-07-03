@@ -6,11 +6,12 @@ const nextConfig: NextConfig = {
     domains: ["res.cloudinary.com"],
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost', // update with the domain you're loading from
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',// update with the domain you're loading from
         port: '',
         pathname: '/**',
       },
+
     ],
 
   }
