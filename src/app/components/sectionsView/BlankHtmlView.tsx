@@ -8,7 +8,8 @@ type BlankHtml = {
   description: string;
 };
 
-import DOMPurify from 'dompurify';
+import createDOMPurify from 'dompurify';
+
 
 export default function BlankHtmlView({ content }: AddProps): React.JSX.Element {
 
@@ -25,10 +26,18 @@ export default function BlankHtmlView({ content }: AddProps): React.JSX.Element 
 
   }, [content]); // Runs whenever selectedSection changes
 
+  const [safeHTML, setSafeHTML] = useState('');
+
+  useEffect(() => {
+    const DOMPurify = createDOMPurify(window);
+    const clean = DOMPurify.sanitize(contentData?.description || '');
+    setSafeHTML(clean);
+  }, [contentData]);
+
 
   return (<>
     <div
-      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(contentData?.description || "") }}
+      dangerouslySetInnerHTML={{ __html: safeHTML }}
     />
   </>)
 
