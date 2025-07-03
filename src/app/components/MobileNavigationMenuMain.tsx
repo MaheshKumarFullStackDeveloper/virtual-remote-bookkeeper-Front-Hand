@@ -25,7 +25,9 @@ export function MobileNavigationMenuMain() {
       <SheetContent className="bg-black">
         <SheetHeader >
           <Link href="/" className=" mt-[5px] ml-[20px] mb-[6px]">
-            <div > {HeaderLogo !== null ? (<Image
+            <div > {HeaderLogo !== null ? (<Image priority
+              sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
               src={HeaderLogo as string} width={80} height={80} alt="logo" className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
             ></Image>) : (<></>)}
             </div>

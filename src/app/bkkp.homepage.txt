@@ -159,7 +159,9 @@ export default function Home() {
             <div className="flex flex-col md:flex-row w-full m-auto  ">
               <div className="flex-1 mt-[30px] ">
                
-                <Image
+                 <Image priority
+  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
                   src="/theme_images/Client.png"
                   width={300}
                   height={80}
@@ -178,7 +180,9 @@ export default function Home() {
           </div>
 
           <div className="flex-1 hidden md:block">
-            <Image
+             <Image priority
+  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
               src="/theme_images/home-banner.png"
               width={523}
               height={750}
@@ -193,7 +197,9 @@ export default function Home() {
         <>
           <div className="flex flex-col md:flex-row my-5  max-w-[1370px] w-full m-auto p-5">
             <div className="flex-1 p-4">
-              <Image
+               <Image priority
+  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
                 src={section2?.photo}
                 width={625}
                 height={352}
@@ -218,7 +224,9 @@ export default function Home() {
               {section3?.description}
             </div>
             <div className="flex-1 p-2   ">
-              <Image
+               <Image priority
+  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
                 src={section3?.photo}
                 width={623}
                 height={352}
@@ -285,7 +293,9 @@ export default function Home() {
               </Link>
             </div>
             <div className="flex-1 p-2   ">
-              <Image
+               <Image priority
+  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
                 src={section5?.photo}
                 width={720}
                 height={369}
@@ -376,7 +386,9 @@ export default function Home() {
           <>
             <div className="flex flex-col md:flex-row my-1 md:my-5  max-w-[1370px] w-full m-auto p-1 md:p-5">
               <div className="flex-1 p-2   ">
-                <Image
+                 <Image priority
+  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
                   src={section8?.photo}
                   width={623}
                   height={352}
