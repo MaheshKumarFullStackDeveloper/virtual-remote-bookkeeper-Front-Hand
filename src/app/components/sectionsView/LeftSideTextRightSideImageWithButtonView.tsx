@@ -59,7 +59,7 @@ export default function LeftSideTextRightSideImageWithButtonView({ content }: Ad
       </div>
       <div className="flex-1 p-2   ">
         {isImageFormat(contentData?.image) ? (
-          <Image priority
+          <Image quality={90} priority
             sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
             src={contentData?.image || "/default-image.png"}
@@ -68,7 +68,7 @@ export default function LeftSideTextRightSideImageWithButtonView({ content }: Ad
             alt="home-banner"
             className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
           ></Image>
-        ) : (<Image priority
+        ) : (<Image quality={90} priority
           sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
           src="/default-image.png"

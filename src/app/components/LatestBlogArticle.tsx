@@ -89,7 +89,7 @@ function LatestBlogArticle({ content }: AddProps): React.JSX.Element {
 
             {posts.map((post, index) => (
               <div key={index} className="flex-1 p-2   ">
-                <Image priority
+                <Image quality={90} priority
                   sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
                   src={`${post.image}` || "/default-image.png"}
