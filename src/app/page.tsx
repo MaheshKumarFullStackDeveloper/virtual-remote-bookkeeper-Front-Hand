@@ -66,7 +66,7 @@ export default async function Home() {
       <>
         {sections && sections.map((section: Sections, index) => (
           <React.Fragment key={index}>
-            {section.title === 'BlankHtml' && <BlankHtmlView content={section.content} />}
+            {/*    {section.title === 'BlankHtml' && <BlankHtmlView content={section.content} />} */}
             {section.title === 'LeftSideImageRightSideContactForm' && <LeftSideImageRightSideContactFormView content={section.content} />}
             {section.title === 'LeftSideTextRightSideImage' && <LeftSideTextRightSideImageView content={section.content} />}
             {section.title === 'OneRowThreeColumn' && <OneRowThreeColumnView content={section.content} />}
