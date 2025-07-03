@@ -57,20 +57,19 @@ export default async function RootLayout({
 
   return (
 
-    <Suspense fallback={<MainLoader />}>
-      <!DOCTYPE html>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${poppins.className} ${roboto.className} ${dmSans.className}`}
-        >
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${poppins.className} ${roboto.className} ${dmSans.className}`}
+      > <Suspense fallback={<MainLoader />}>
           <LayoutWrapper initialHeaderFooter={sanitizedHeaderFooter}>
             <Header />
             {children}
             <Footer />
           </LayoutWrapper>
           <ToastContainer />
-        </body>
-      </html>
-    </Suspense>
+        </Suspense>
+      </body>
+    </html>
+
   );
 }
