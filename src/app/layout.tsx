@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import LayoutWrapper from "./LayoutWrapper";
 import MainLoader from "@/lib/MainLoader";
 import { getHeaderFooterWidgets } from "./store/getHeaderFooterWidgets";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import "./globals.css";
 import "./style.css";
@@ -68,6 +69,7 @@ export default async function RootLayout({
             <Footer />
           </LayoutWrapper>
           <ToastContainer />
+          <SpeedInsights />
         </body>
       </html>
     </Suspense>
