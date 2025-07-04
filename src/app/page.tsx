@@ -26,7 +26,10 @@ async function getPagedata(page: string) {
   try {
     const response = await fetch(`${basenewUrl}/page/${page}`, {
       headers: {
-        origin: homeUrl ?? ""
+        origin: homeUrl ?? "",
+        'Cache-Control': 'public, s-maxage=1',
+        'CDN-Cache-Control': 'public, s-maxage=60',
+        'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
       }
     });
 

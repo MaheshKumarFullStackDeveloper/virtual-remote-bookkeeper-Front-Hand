@@ -6,7 +6,12 @@ export async function getHeaderFooterWidgets() {
 
     const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/widget/headerfooterdata`, {
-        headers: { origin: homeUrl ?? "" },
+        headers: {
+            origin: homeUrl ?? "",
+            'Cache-Control': 'public, s-maxage=1',
+            'CDN-Cache-Control': 'public, s-maxage=60',
+            'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
+        },
         cache: 'no-store' // use 'force-cache' or 'revalidate' if needed
     });
 
