@@ -94,18 +94,15 @@ export default function PageBannerView({ content }: AddProps): React.JSX.Element
             <div className="flex-1 mt-[30px] ">
               {isImageFormat(contentData?.rightImage) ? (
                 <Image
-                  src={contentData?.leftImage || "/default-image.png"}
+                  priority
+                  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
+                  src={contentData?.leftImage || "/logo.png"}
                   width={300}
                   height={80}
                   alt="home-banner"
                   className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
-                ></Image>) : (<Image
-                  src="/default-image.png"
-                  width={300}
-                  height={80}
-                  alt="home-banner"
-                  className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
-                ></Image>)}
+                ></Image>) : (<></>)}
 
             </div>
             <div className="flex-1 ">
@@ -122,18 +119,15 @@ export default function PageBannerView({ content }: AddProps): React.JSX.Element
 
           {isImageFormat(contentData?.rightImage) ? (
             <Image
-              src={contentData?.rightImage || "/default-image.png"}
+              priority
+              sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+
+              src={contentData?.rightImage || "/logo.png"}
               width={523}
               height={750}
               alt="home-banner"
               className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
-            ></Image>) : (<Image
-              src="/default-image.png"
-              width={325}
-              height={352}
-              alt="home-banner"
-              className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
-            ></Image>)}
+            ></Image>) : (<></>)}
         </div>
       </div>
     </div>
