@@ -13,6 +13,9 @@ import OneRowTwoColumnView from '../components/sectionsView/OneRowTwoColumnView'
 import TopTextBottomContactFormView from '../components/sectionsView/TopTextBottomContactFormView';
 import LeftSideImageRightSideTextView from '../components/sectionsView/LeftSideImageRightSideTextView';
 import FAQView from '../components/sectionsView/FAQView';
+import PageBannerView from '../components/sectionsView/PageBannerView';
+import LeftSideContactFormtRightSideTextViewView from '../components/sectionsView/LeftSideContactFormtRightSideTextView';
+import LeftSideTextRightSideContactFormViewView from '../components/sectionsView/LeftSideTextRightSideContactFormView';
 
 
 interface CommonPageTemplateProps {
@@ -38,6 +41,12 @@ export default function CommonPageTemplate({ pageData }: CommonPageTemplateProps
         {sections && sections.map((section: Sections, index) => (
           <React.Fragment key={index}>
             {section.title === 'BlankHtml' && <BlankHtmlView content={section.content} />}
+
+            {section.title === 'PageBanner' && <PageBannerView content={section.content} />}
+            {section.title === 'LeftSideContactFormtRightSideText' && <LeftSideContactFormtRightSideTextViewView content={section.content} />}
+            {section.title === 'LeftSideTextRightSideContactForm' && <LeftSideTextRightSideContactFormViewView content={section.content} />}
+
+
             {section.title === 'LeftSideImageRightSideContactForm' && <LeftSideImageRightSideContactFormView content={section.content} />}
             {section.title === 'LeftSideTextRightSideImage' && <LeftSideTextRightSideImageView content={section.content} />}
             {section.title === 'OneRowThreeColumn' && <OneRowThreeColumnView content={section.content} />}

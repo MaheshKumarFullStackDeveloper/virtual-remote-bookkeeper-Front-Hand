@@ -53,6 +53,7 @@ export default async function RootLayout({
     headerMenu: headerFooter.headerMenu ?? [],
     footerMenu: headerFooter.footerMenu ?? [],
     headerButton: headerFooter.headerButton ?? null,
+    blogCategories: headerFooter.blogCategories ?? null,
   };
 
   return (

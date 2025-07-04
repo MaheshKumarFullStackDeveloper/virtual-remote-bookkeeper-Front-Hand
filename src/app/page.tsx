@@ -13,6 +13,9 @@ import FAQView from "./components/sectionsView/FAQView";
 import { Page, Sections } from "@/lib/types/types";
 import LatestBlogArticle from "./components/LatestBlogArticle";
 import React from "react";
+import PageBannerView from "./components/sectionsView/PageBannerView";
+import LeftSideContactFormtRightSideTextViewView from "./components/sectionsView/LeftSideContactFormtRightSideTextView";
+import LeftSideTextRightSideContactFormViewView from "./components/sectionsView/LeftSideTextRightSideContactFormView";
 
 
 const basenewUrl = process.env.NEXT_PUBLIC_API; // Load from .env 
@@ -52,8 +55,9 @@ export default async function Home() {
   const HomeContent = await getPagedata('home') as Page;
   const sections = HomeContent?.sections;
 
-  if (sections === null) {
-    return (<MainLoader />);
+  if (!HomeContent || sections === undefined || sections === null) {
+    return <MainLoader />;
+
 
   } else if (HomeContent?.title === 'Page not Found') {
     return (<h1 className="text-black">Page not Found</h1>);
@@ -67,6 +71,10 @@ export default async function Home() {
         {sections && sections.map((section: Sections, index) => (
           <React.Fragment key={index}>
             {section.title === 'BlankHtml' && <BlankHtmlView content={section.content} />}
+            {section.title === 'PageBanner' && <PageBannerView content={section.content} />}
+            {section.title === 'LeftSideContactFormtRightSideText' && <LeftSideContactFormtRightSideTextViewView content={section.content} />}
+            {section.title === 'LeftSideTextRightSideContactForm' && <LeftSideTextRightSideContactFormViewView content={section.content} />}
+
             {section.title === 'LeftSideImageRightSideContactForm' && <LeftSideImageRightSideContactFormView content={section.content} />}
             {section.title === 'LeftSideTextRightSideImage' && <LeftSideTextRightSideImageView content={section.content} />}
             {section.title === 'OneRowThreeColumn' && <OneRowThreeColumnView content={section.content} />}
