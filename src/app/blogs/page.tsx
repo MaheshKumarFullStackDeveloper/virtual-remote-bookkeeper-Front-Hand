@@ -93,7 +93,9 @@ const Page: React.FC = () => {
   };
 
   const totalPages = Math.ceil(total / limit);
-
+  const isImageFormat = (imageUrl: string | undefined): boolean => {
+    return !!imageUrl && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(imageUrl);
+  };
   return (
     <div className="max-w-[1370px] w-full m-auto justify-between mb-24 text-center">
       <div className="bg-[#003a3a] w-full py-5 md:py-20 mb-5 md:mb-8 lg:mb-12 text-center">
@@ -112,15 +114,17 @@ const Page: React.FC = () => {
           <div className="grid grid-cols-1 min-[460px]:grid-cols-2 md:grid-cols-3 gap-3 max-w-[95%] justify-between m-auto text-center">
             {posts.map((post, index) => (
               <div key={index}>
-                <Image
-                  priority
-                  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
-                  src={`${post.image}` || "/default-image.png"}
-                  width={419}
-                  height={223}
-                  alt={post.title}
-                  className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 mb-5"
-                />
+                {isImageFormat(post?.image) ? (
+                  <Image
+                    priority
+                    sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+                    src={`${post.image}` || "/logo.png"}
+                    width={419}
+                    height={223}
+                    alt={post.title}
+                    className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 mb-5"
+                  />
+                ) : (<></>)}
                 <div className="max-w-[90%] w-full m-auto text-left mb-7">
                   <Link
                     className="text-[25px] text-black py-5 break-words cursor-pointer capitalize font-georgia font-medium leading-[35px]"

@@ -18,7 +18,9 @@ interface CommonPageTemplateProps {
 
 async function SingleBlogContent({ blogData }: CommonPageTemplateProps) {
 
-
+  const isImageFormat = (imageUrl: string | undefined): boolean => {
+    return !!imageUrl && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(imageUrl);
+  };
 
   if (blogData?.content === "Page not Found") {
     return <h1 className="text-black">Page not Found</h1>;
@@ -30,15 +32,16 @@ async function SingleBlogContent({ blogData }: CommonPageTemplateProps) {
         </div>
         <div className="flex flex-col md:flex-row max-w-[1370px] gap-10 w-full m-auto">
           <div className="flex-8 shadow-[10px_10px_50px_rgba(0,0,0,0.05)] mb-3">
-            <Image priority
+            {isImageFormat(blogData?.image) ? (<Image priority
               sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
-              src={`${blogData?.image}` || "/default-image.png"}
-              width={1400}
+              src={`${blogData?.image}` || "/logo.png"}
+              width={900}
               height={500}
               alt="home-banner"
               className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
             />
+            ) : (<></>)}
             <div className="w-full px-8 pt-8 pb-0 text-left justify-between">
               <span className="before-style tracking-[0.25rem] uppercase text-[0.875rem] mb-0.5 rounded-[0px] text-[#285bd4] text-left">
                 {blogData?.created}
