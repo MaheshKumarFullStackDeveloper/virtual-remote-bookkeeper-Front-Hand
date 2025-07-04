@@ -87,7 +87,9 @@ function LatestBlogArticle({ content }: AddProps): React.JSX.Element {
     }
   }, [categoryId, BlogCategories]);
 
-
+  const isImageFormat = (imageUrl: string | undefined): boolean => {
+    return !!imageUrl && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(imageUrl);
+  };
 
   return (<>
 
@@ -102,15 +104,17 @@ function LatestBlogArticle({ content }: AddProps): React.JSX.Element {
             {posts.map((post, index) => (
               <div key={index} className="flex-1 p-2 
                 justify-center">
-                <Image priority
-                  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+                {isImageFormat(post?.image) ? (
+                  <Image priority
+                    sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
-                  src={`${post.image}` || "/default-image.png"}
-                  width={419}
-                  height={236}
-                  alt={post.title}
-                  className="transition delay-150 duration-300 m-auto ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 mb-5"
-                ></Image>
+                    src={`${post.image}` || "/logo.png"}
+                    width={419}
+                    height={236}
+                    alt={post.title}
+                    className="transition delay-150 duration-300 m-auto ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 mb-5"
+                  ></Image>
+                ) : (<></>)}
 
                 <div className=" max-w-[90%] w-full m-auto text-center mb-7">
                   <Link className="break-words block text-center text-[25px] capitalize font-georgia text-black font-medium p-5 leading-[35px]" href={`/blogs/${post.slug}`}>{post.title} </Link>
