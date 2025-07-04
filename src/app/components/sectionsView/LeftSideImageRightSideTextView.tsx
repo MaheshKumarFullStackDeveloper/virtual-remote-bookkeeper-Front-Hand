@@ -37,24 +37,16 @@ export default function LeftSideImageRightSideTextView({ content }: AddProps): R
 
         <div className="flex-1 p-2   ">
           {isImageFormat(contentData?.image) ? (
-            <Image quality={90} priority
+            <Image priority
               sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
-              src={contentData?.image || "/default-image.png"}
+              src={contentData?.image || "/logo.png"}
               width={623}
               height={352}
               alt="home-banner"
               className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
             ></Image>
-          ) : (<Image quality={90} priority
-            sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
-
-            src="/default-image.png"
-            width={325}
-            height={352}
-            alt="home-banner"
-            className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
-          ></Image>)}
+          ) : (<></>)}
         </div>
         <div className="flex-1 text-[18px] text-[#596475] p-5  leading-[1.66em] ">
           <h2 className="text-left">{contentData?.heading}</h2>

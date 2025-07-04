@@ -1,5 +1,7 @@
 // getHeaderFooterWidgets.ts
 
+import { HeaderFooterData } from "@/lib/types/types";
+
 export async function getHeaderFooterWidgets() {
 
     const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
@@ -10,7 +12,7 @@ export async function getHeaderFooterWidgets() {
 
     const widgets = await res.json();
 
-    const data = {
+    const data: HeaderFooterData = {
         headerLogo: null,
         footerLogo: null,
         footerText: null,
@@ -18,8 +20,9 @@ export async function getHeaderFooterWidgets() {
         headerMenu: null,
         footerMenu: null,
         headerButton: null,
+        blogCategories: null,
     };
-
+    // console.log("initial Header Footer query", widgets.data)
     for (const item of widgets.data.widgetsList) {
         switch (item.title) {
             case 'header-logo':
@@ -37,6 +40,7 @@ export async function getHeaderFooterWidgets() {
             case 'header-button':
                 data.headerButton = item.content;
                 break;
+
         }
     }
     for (const item of widgets.data.menu) {
@@ -51,6 +55,7 @@ export async function getHeaderFooterWidgets() {
 
         }
     }
+    data.blogCategories = widgets.data.categoryList;
 
     return data;
 }

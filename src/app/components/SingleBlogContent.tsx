@@ -4,25 +4,15 @@ import Image from 'next/image';
 //import GetBlogCategoryName from './GetBlogCategoryName';
 import QuickContact from './QuickContact';
 import { Blog } from '@/lib/types/types';
-
+import GetBlogCategoryName from './GetBlogCategoryName';
+import Carousel from './Carousel';
 
 
 
 interface CommonPageTemplateProps {
   blogData: Blog | null; // Replace `Page` with the actual shape of your data
 }
-/* const fetchPosts = async (category?: string): Promise<PaginatedResponse> => {
-  const response = await axios.get<Post[]>(`${baseUrl}/blogs`, {
-    params: {
-      _page: 1,
-      _limit: 5,
-      ...(category && { category }),
-    },
-  });
 
-  return { data: response.data };
-};
- */
 
 
 
@@ -30,11 +20,6 @@ async function SingleBlogContent({ blogData }: CommonPageTemplateProps) {
 
 
 
-  //  const { data } = await fetchPosts(metadatas?.category || "");
-
-  //const slides: Post[] = data.length > 0 ? data : [];
-  //const slides: Post[] = [];
-  //console.log("blogData", blogData);
   if (blogData?.content === "Page not Found") {
     return <h1 className="text-black">Page not Found</h1>;
   } else {
@@ -45,7 +30,7 @@ async function SingleBlogContent({ blogData }: CommonPageTemplateProps) {
         </div>
         <div className="flex flex-col md:flex-row max-w-[1370px] gap-10 w-full m-auto">
           <div className="flex-8 shadow-[10px_10px_50px_rgba(0,0,0,0.05)] mb-3">
-            <Image quality={90} priority
+            <Image priority
               sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
               src={`${blogData?.image}` || "/default-image.png"}
@@ -62,7 +47,8 @@ async function SingleBlogContent({ blogData }: CommonPageTemplateProps) {
                 Admin
               </span>
               <span className="tracking-[0.25rem] uppercase text-[0.875rem] mb-0.5 rounded-[0px] text-[#596475] text-left">
-                {/* <GetBlogCategoryName category={blogData?.category || ""} /> */}
+                <GetBlogCategoryName category={blogData?.categories} />
+
               </span>
             </div>
             <div
@@ -81,7 +67,7 @@ async function SingleBlogContent({ blogData }: CommonPageTemplateProps) {
                 <span className="text-[#fe6b01] text-[30px] pr-[10px]">-</span>
                 Latest post
               </h4>
-              {/*       {data.length > 0 ? <Carousel slides={slides} /> : null} */}
+              {blogData?.categories && blogData?.categories.length > 0 ? <Carousel catId={blogData?.categories[0]?._id} /> : null}
             </div>
           </div>
         </div>

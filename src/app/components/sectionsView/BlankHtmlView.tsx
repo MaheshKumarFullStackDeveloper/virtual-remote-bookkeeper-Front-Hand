@@ -4,35 +4,28 @@ type AddProps = {
   content: string;
 };
 
-type BlankHtml = {
-  description: string;
-};
 
 import createDOMPurify from 'dompurify';
 
 
 export default function BlankHtmlView({ content }: AddProps): React.JSX.Element {
 
-  const [contentData, setcontentData] = useState<BlankHtml | null>(null);
-
+  const [safeHTML, setSafeHTML] = useState('');
   useEffect(() => {
     if (content !== "") {
-      const Details = JSON.parse(content);
 
-      setcontentData(Details)
+      const Details = JSON.parse(content);
+      const DOMPurify = createDOMPurify(window);
+      const clean = DOMPurify.sanitize(Details?.description || '');
+      setSafeHTML(clean);
     }
 
 
 
   }, [content]); // Runs whenever selectedSection changes
 
-  const [safeHTML, setSafeHTML] = useState('');
 
-  useEffect(() => {
-    const DOMPurify = createDOMPurify(window);
-    const clean = DOMPurify.sanitize(contentData?.description || '');
-    setSafeHTML(clean);
-  }, [contentData]);
+
 
 
   return (<>

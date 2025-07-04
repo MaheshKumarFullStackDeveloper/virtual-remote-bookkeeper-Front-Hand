@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store'; // Adjust the path as needed
-import { Page } from '@/lib/types/types';
+import { blogCategoryList, Page } from '@/lib/types/types';
 
 
 
@@ -33,7 +33,7 @@ interface dataState {
   footerCopywrite: string | null;
   error: string | null;
   value: number;
-  blogCategories: { [key: string]: string };
+  blogCategories: blogCategoryList[] | null;
   footerMenu: footerMenus[] | null;
   headerMenu: headerMenus[] | null;
   footerText: string | null;
@@ -98,11 +98,7 @@ const initialState: dataState = {
   headerButton: null,
   footerLogo: null,
   footerCopywrite: null,
-  blogCategories: {
-    1: 'Xero Bookkeeping Packages',
-    2: 'Value and Benefits Xero Services',
-    3: 'Individuals & Freelancers',
-  },
+  blogCategories: null,
   footerMenu: null,
   headerMenu: null
 
@@ -130,6 +126,9 @@ const dataSlice = createSlice({
     setHeaderMenu: (state, action: PayloadAction<headerMenus[] | null>) => {
       state.headerMenu = action.payload;
     },
+    setBlogCategories: (state, action: PayloadAction<blogCategoryList[] | null>) => {
+      state.blogCategories = action.payload;
+    },
     setHeaderButton: (state, action: PayloadAction<string | null>) => {
       state.headerButton = action.payload;
     },
@@ -156,6 +155,7 @@ const dataSlice = createSlice({
 
 
 export const selectData = (state: RootState) => state.data.data;
+export const selectBlogCategories = (state: RootState) => state.data.blogCategories;
 export const selectHeaderLogo = (state: RootState) => state.data.headerLogo;
 export const selectHeaderButton = (state: RootState) => state.data.headerButton;
 export const selectFooterLogo = (state: RootState) => state.data.footerLogo;
@@ -166,5 +166,5 @@ export const selectHeaderMenu = (state: RootState) => state.data.headerMenu;
 export const selectStatus = (state: RootState) => state.data.status;
 export const selectError = (state: RootState) => state.data.error;
 
-export const { setHeaderLogo, setfooterCopywrite, setFooterLogo, setFooterText, setFooterMenu, setHeaderMenu, setHeaderButton } = dataSlice.actions;
+export const { setHeaderLogo, setfooterCopywrite, setBlogCategories, setFooterLogo, setFooterText, setFooterMenu, setHeaderMenu, setHeaderButton } = dataSlice.actions;
 export default dataSlice.reducer; 

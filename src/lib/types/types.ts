@@ -164,3 +164,43 @@ export interface Product {
   shippingCharge: string;
 }
 
+export interface blogCategoryList {
+  _id: string;
+  title: string;
+  slug: string;
+  status: string;
+  metaTitle: string;
+  metaDescription: string;
+}
+export interface Post {
+  id: number;
+  title: string;
+  created: string;
+  image: string;
+  category: string;
+  slug: string;
+}
+export interface HeaderFooterData {
+  headerLogo: string | null;
+  footerLogo: string | null;
+  footerText: string | null;
+  footerMenu: footerMenus[] | null;
+  headerMenu: headerMenus[] | null;
+  headerButton: string | null;
+  footerCopywrite: string | null;
+  blogCategories: blogCategoryList[] | null;
+}
+export interface footerMenus {
+  title: string;
+  link: string;
+}
+
+export interface subMenus {
+  title: string;
+  link: string;
+}
+export interface headerMenus {
+  title: string;
+  link: string;
+  children: subMenus[] | null;
+}

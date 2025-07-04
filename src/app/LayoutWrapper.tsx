@@ -11,32 +11,11 @@ import {
   setFooterMenu,
   setHeaderMenu,
   setHeaderButton,
+  setBlogCategories,
 } from "./store/slice/dataSlice";
+import { HeaderFooterData } from "@/lib/types/types";
 
-interface footerMenus {
-  title: string;
-  link: string;
-}
 
-interface subMenus {
-  title: string;
-  link: string;
-}
-interface headerMenus {
-  title: string;
-  link: string;
-  children: subMenus[] | null;
-}
-
-interface HeaderFooterData {
-  headerLogo: string | null;
-  footerLogo: string | null;
-  footerText: string | null;
-  footerMenu: footerMenus[] | null;
-  headerMenu: headerMenus[] | null;
-  headerButton: string | null;
-  footerCopywrite: string | null;
-}
 
 function InnerLayout({
   children,
@@ -49,6 +28,8 @@ function InnerLayout({
 
   useEffect(() => {
     if (initialHeaderFooter) {
+      //  console.log("initial Header Footer", initialHeaderFooter)
+
       dispatch(setHeaderLogo(initialHeaderFooter.headerLogo ?? ""));
       dispatch(setFooterLogo(initialHeaderFooter.footerLogo ?? ""));
       dispatch(setFooterText(initialHeaderFooter.footerText ?? ""));
@@ -56,6 +37,7 @@ function InnerLayout({
       dispatch(setHeaderMenu(initialHeaderFooter.headerMenu));
       dispatch(setHeaderButton(initialHeaderFooter.headerButton));
       dispatch(setfooterCopywrite(initialHeaderFooter.footerCopywrite ?? ""));
+      dispatch(setBlogCategories(initialHeaderFooter.blogCategories));
     }
   }, [initialHeaderFooter, dispatch]);
 
