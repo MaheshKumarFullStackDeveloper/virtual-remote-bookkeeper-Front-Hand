@@ -1,4 +1,5 @@
-
+import React from "react";
+import { Page, Sections } from "@/lib/types/types";
 import MainLoader from "@/lib/MainLoader";
 import BlankHtmlView from "./components/sectionsView/BlankHtmlView";
 import LeftSideImageRightSideContactFormView from "./components/sectionsView/LeftSideImageRightSideContactFormView";
@@ -10,9 +11,7 @@ import OneRowTwoColumnView from "./components/sectionsView/OneRowTwoColumnView";
 import TopTextBottomContactFormView from "./components/sectionsView/TopTextBottomContactFormView";
 import LeftSideImageRightSideTextView from "./components/sectionsView/LeftSideImageRightSideTextView";
 import FAQView from "./components/sectionsView/FAQView";
-import { Page, Sections } from "@/lib/types/types";
 import LatestBlogArticle from "./components/LatestBlogArticle";
-import React from "react";
 import PageBannerView from "./components/sectionsView/PageBannerView";
 import LeftSideContactFormtRightSideTextViewView from "./components/sectionsView/LeftSideContactFormtRightSideTextView";
 import LeftSideTextRightSideContactFormViewView from "./components/sectionsView/LeftSideTextRightSideContactFormView";
@@ -30,17 +29,28 @@ async function getPagedata(page: string) {
         origin: homeUrl ?? ""
       }
     });
-    const data = await response.json();
-    const dataPage = data?.data;
-    // console.log("home URl----", dataPage);
-    if (dataPage.sections && dataPage?.sections?.length > 0) {
-      return dataPage;
+
+    // Check if response is JSON before parsing
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      const data = await response.json();
+      const dataPage = data?.data;
+      if (dataPage?.sections?.length > 0) {
+        return dataPage;
+      } else {
+        return {
+          slug: page,
+          title: "Page not Found",
+        };
+      }
     } else {
+      console.error("Invalid content type or non-JSON response:", await response.text());
       return {
         slug: page,
         title: "Page not Found",
       };
     }
+
   } catch (error) {
     console.error("Failed to fetch metadata:", error);
     return undefined;
