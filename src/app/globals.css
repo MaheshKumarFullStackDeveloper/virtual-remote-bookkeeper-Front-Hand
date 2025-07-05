@@ -118,7 +118,7 @@
 @layer base {
   :root {
     body{
-      @apply  leading-[1.75] text-[16px]
+      @apply leading-[1.75] text-[16px]
     }
     h2,h3,h4,h1,h6 {
     @apply text-4xl text-center  text-[#020202] leading-snug py-2.5 font-georgia  font-medium  capitalize
@@ -129,25 +129,25 @@
     @apply text-[3.157rem]
   }
   h3 {
-    @apply  text-[2.369rem]
+    @apply text-[2.369rem]
   }
   h4 {
-    @apply  text-[1.777rem]
+    @apply text-[1.777rem]
   }
   p{
-    @apply  text-[16px] text-white leading-[1.66em]
+    @apply text-[16px] text-white leading-[1.66em]
   }
   .AccordionContents  ul{
-    @apply  pl-[25px] mb-[1em] list-disc font-mono
+    @apply pl-[25px] mb-[1em] list-disc font-mono
   }
   .paghadsec  ul{
-    @apply  pl-[25px] mb-[1em] list-disc font-mono
+    @apply pl-[25px] mb-[1em] list-disc font-mono
   }
   .AccordionContents  p{
     @apply text-[#dd9933] 
   }
   .pagesec  h6{
-    @apply  text-[30px] font-bold
+    @apply text-[30px] font-bold
   }
 
   .pagesec p{
@@ -162,51 +162,51 @@
   }
 
   .singleBlogPage h2 {
-    @apply  text-[#020202] text-[28px]  text-left
+    @apply text-[#020202] text-[28px]  text-left
   }
   .singleBlogPage h3 {
-    @apply  text-[#020202] text-[28px]  text-left
+    @apply text-[#020202] text-[28px]  text-left
   }
   .singleBlogPage h4 {
-    @apply  text-[#020202] text-[28px]  text-left font-dm
+    @apply text-[#020202] text-[28px]  text-left font-dm
   }
   .singleBlogPage a {
     @apply  text-[#285bd4] 
   }
   .singleBlogPage table {
-    @apply  table-fixed border-collapse border border-gray-400 w-full
+    @apply table-fixed border-collapse border border-gray-400 w-full
   }
   .singleBlogPage table tr{
-    @apply  table-row 
+    @apply table-row 
   }
   .singleBlogPage table td{
-    @apply   leading-[1.66em] text-[#596475] text-[1rem]  text-left p-[.5em] border border-gray-400
+    @apply leading-[1.66em] text-[#596475] text-[1rem]  text-left p-[.5em] border border-gray-400
   }
   .pagesec1 ul{
     @apply list-disc p-4
   }
-  .bannerHadding1{
-    @apply  text-[#DAA520] border-b-[5px] text-left border-solid border-[#DAA520] rounded-[10px] capitalize -tracking-normal font-medium   text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px]
+  .bannerHaddingOne{
+    @apply text-[#DAA520] border-b-[5px] text-left border-solid border-[#DAA520] rounded-[10px] capitalize -tracking-normal font-medium   text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px]
   }
 
-  .bannerHadding2{
-    @apply   text-white capitalize tracking-normal text-left outline-none font-medium  text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px] 
+  .bannerHaddingTwo{
+    @apply text-white capitalize tracking-normal text-left outline-none font-medium  text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px] 
   }
 
-  .bannerHadding3{
-    @apply   text-white capitalize text-left  font-medium text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px]
+  .bannerHaddingThree{
+    @apply text-white capitalize text-left  font-medium text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px]
   }
 
   .bannerbutton{
-    @apply   text-white font-Roboto font-[500] text-[20px] bg-[#daa521] rounded-[1px] pt-[9px] mt-[-8px] tb-[17px] px-[60px] h-[51px] transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-black hover:text-white  no-underline 
+    @apply text-white font-Roboto font-[500] text-[20px] bg-[#daa521] rounded-[1px] pt-[9px] mt-[-8px]  px-[60px] h-[51px] transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-black hover:text-white  no-underline 
   }
 
   .bannerimage{
-    @apply  transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md
+    @apply transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md
   }
 
   .bannerP1{
-    @apply  leading-9 font-normal text-[25px] text-white font-Roboto mt-[50px]
+    @apply leading-9 font-normal text-[25px] text-white font-Roboto mt-[50px]
   }
 
   .bannerP2{
@@ -214,7 +214,7 @@
   }
 
   .bannerP3{
-    @apply  leading-8 mt-10 font-normal text-[23px] text-white font-Roboto
+    @apply leading-8 mt-10 font-normal text-[23px] text-white font-Roboto
   }
 
  }

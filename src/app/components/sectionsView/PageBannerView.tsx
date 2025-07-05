@@ -68,15 +68,15 @@ export default function PageBannerView({ content }: AddProps): React.JSX.Element
           </p>
 
           <span
-            className={`${georgia.className} bannerHadding1 `}
+            className={`${georgia.className} bannerHaddingOne `}
           >{contentData?.mainHeading1} </span>
           <span
-            className={`${georgia.className} bannerHadding2 `}
+            className={`${georgia.className} bannerHaddingTwo `}
           >{contentData?.mainHeading2}
           </span>
           <br />
           <span
-            className={`${georgia.className} bannerHadding3 `}
+            className={`${georgia.className} bannerHaddingThree `}
           >{contentData?.mainHeading3} </span>
           <p className="bannerP2">
             {contentData?.bottomHeading}
