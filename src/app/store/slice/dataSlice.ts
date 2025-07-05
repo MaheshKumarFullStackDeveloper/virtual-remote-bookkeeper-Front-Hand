@@ -57,8 +57,8 @@ export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: str
     const data = await response.json();
     // console.log("page data slice", data);
     const dataPage = data?.data;
-    // console.log("home URl----", dataPage);
-    if (dataPage.sections && dataPage?.sections?.length > 0) {
+
+    if (dataPage.sections && dataPage?.sections?.length > 0 && dataPage.status === 'active') {
       return dataPage;
     } else {
       const newArray = {
@@ -67,7 +67,7 @@ export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: str
           title: "",
           description: ""
         },
-        content: "Page not Found"
+        title: "Page not Found"
       }
       return newArray;
     }
@@ -79,7 +79,7 @@ export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: str
         title: "",
         description: ""
       },
-      content: "Page not Found"
+      title: "Page not Found"
     }
     return newArray;
   }
