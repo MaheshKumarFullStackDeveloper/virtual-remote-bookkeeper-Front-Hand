@@ -16,6 +16,7 @@ import FAQView from '../components/sectionsView/FAQView';
 import PageBannerView from '../components/sectionsView/PageBannerView';
 import LeftSideContactFormtRightSideTextViewView from '../components/sectionsView/LeftSideContactFormtRightSideTextView';
 import LeftSideTextRightSideContactFormViewView from '../components/sectionsView/LeftSideTextRightSideContactFormView';
+import Redirect404 from '../components/sectionsView/Redirect404';
 
 
 interface CommonPageTemplateProps {
@@ -25,12 +26,12 @@ interface CommonPageTemplateProps {
 export default function CommonPageTemplate({ pageData }: CommonPageTemplateProps) {
 
   const sections = pageData?.sections;
-
+  //console.log("pageData", pageData)
   if (sections === null) {
     return (<MainLoader />);
 
   } else if (pageData?.title === 'Page not Found') {
-    return (<h1 className="text-black">Page not Found</h1>);
+    return (<><Redirect404 url="/404" /></>);
 
   } else {
 
@@ -38,6 +39,7 @@ export default function CommonPageTemplate({ pageData }: CommonPageTemplateProps
 
     return (
       <>
+        {pageData?.title === 'Page not Found' && <Redirect404 url="/404" />}
         {sections && sections.map((section: Sections, index) => (
           <React.Fragment key={index}>
             {section.title === 'BlankHtml' && <BlankHtmlView content={section.content} />}

@@ -29,10 +29,11 @@ interface PaginatedResponse {
 const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
 //blog?page=${page}&limit=${limit}
 const fetchFaqs = async (
-  limit?: number // Optional parameter for category
+  limit?: number, // Optional parameter for category
+  categorySlug?: string | null // Optional parameter for category
 ): Promise<PaginatedResponse> => {
 
-  const res = await fetch(`${baseUrl}/faq?page=1&limit=${limit}`, {
+  const res = await fetch(`${baseUrl}/faq/bycatslug?page=1&limit=${limit}&slug=${categorySlug}`, {
     headers: {
       origin: homeUrl ?? ""
     }
@@ -60,22 +61,22 @@ export default function FAQView({ content }: AddProps): React.JSX.Element {
   useEffect(() => {
     const loadFaqs = async () => {
       setFaqsData(null);
-      const response = await fetchFaqs(3); // response is PaginatedResponse
+      const response = await fetchFaqs(20, contentData?.categorySlug); // response is PaginatedResponse
 
       setFaqsData(response.data); // ✅ now you're setting FAQ[]
     };
 
     loadFaqs();
-  }, []);
+  }, [contentData]);
 
   return (<>
     <div className="my-5 md:my-8 lg:my-11 max-w-[1370px] w-full m-auto p-5">
-      <h2>{contentData?.heading}</h2>
+      <h2>{contentData?.heading} </h2>
 
       <Accordion type="single" collapsible className="w-full">
 
         {faqs && faqs !== null && faqs.map((slide: FAQ, index: number) => (
-          <AccordionItem key={index} value={`item-${index}`}>
+          <AccordionItem key={index} value={`item - ${index}`}>
             <AccordionTrigger className="p-4 text-[20px] hover:no-underline cursor-pointer leading-[28px] font-bold font-georgia font-stretch-condensed capitalize bg-[#eee]">{slide?.title}</AccordionTrigger>
             <AccordionContent className="border border-solid border-[#cacaca] AccordionContents text-[#dd9933] p-4 text-[16px] font-normal font-mono leading-[25px] "><div
               className="text-left p-8 pt-0 "
