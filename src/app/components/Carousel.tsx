@@ -82,7 +82,7 @@ const Carousel = ({ catId }: { catId: string }) => {
         <div className="flex max-w-[430px] w-full">
           {posts.map((slide, index) => (
             <div key={index} className="flex-none w-full relative">
-              <Image priority
+              <Image quality={50} priority
                 sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
                 width={500}

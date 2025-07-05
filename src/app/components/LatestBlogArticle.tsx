@@ -105,7 +105,7 @@ function LatestBlogArticle({ content }: AddProps): React.JSX.Element {
               <div key={index} className="flex-1 p-2 
                 justify-center">
                 {isImageFormat(post?.image) ? (
-                  <Image priority
+                  <Image quality={50} priority
                     sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
                     src={`${post.image}` || "/logo.png"}

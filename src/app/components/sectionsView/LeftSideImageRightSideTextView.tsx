@@ -37,7 +37,7 @@ export default function LeftSideImageRightSideTextView({ content }: AddProps): R
 
         <div className="flex-1 p-2   ">
           {isImageFormat(contentData?.image) ? (
-            <Image priority
+            <Image quality={50} priority
               sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
               src={contentData?.image || "/logo.png"}

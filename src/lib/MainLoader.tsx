@@ -9,7 +9,7 @@ export default function MainLoader() {
       <div className="flex flex-col items-center">
 
 
-        <Image
+        <Image quality={50}
           src="/theme_images/virtualremote-loader.jpg"
           alt="loader image"
           width={150}
