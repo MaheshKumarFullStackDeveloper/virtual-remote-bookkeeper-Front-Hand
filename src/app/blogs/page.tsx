@@ -115,7 +115,7 @@ const Page: React.FC = () => {
             {posts.map((post, index) => (
               <div key={index}>
                 {isImageFormat(post?.image) ? (
-                  <Image
+                  <Image quality={50}
                     priority
                     sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
                     src={`${post.image}` || "/logo.png"}

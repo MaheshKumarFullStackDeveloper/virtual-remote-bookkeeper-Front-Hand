@@ -93,7 +93,7 @@ export default function PageBannerView({ content }: AddProps): React.JSX.Element
           <div className="flex flex-col md:flex-row w-full m-auto  ">
             <div className="flex-1 mt-[30px] ">
               {isImageFormat(contentData?.rightImage) ? (
-                <Image
+                <Image quality={50}
                   priority
                   sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
@@ -118,7 +118,7 @@ export default function PageBannerView({ content }: AddProps): React.JSX.Element
 
 
           {isImageFormat(contentData?.rightImage) ? (
-            <Image
+            <Image quality={50}
               priority
               sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
