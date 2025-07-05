@@ -86,7 +86,7 @@ export default function PageBannerView({ content }: AddProps): React.JSX.Element
               <Button
                 size="default"
                 variant="default"
-                className="bannerbutton"
+                className="bg-[#daa521] h-[51px] bannerButtons py-[17px]"
               >{contentData?.buttonText} </Button>
             </Link>
           </p>
