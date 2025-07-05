@@ -185,5 +185,37 @@
   .pagesec1 ul{
     @apply list-disc p-4
   }
-}
+  .bannerHadding1{
+    @apply  text-[#DAA520] border-b-[5px] text-left border-solid border-[#DAA520] rounded-[10px] capitalize -tracking-normal font-medium   text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px]
+  }
+
+  .bannerHadding2{
+    @apply   text-white capitalize tracking-normal text-left outline-none font-medium  text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px] 
+  }
+
+  .bannerHadding3{
+    @apply   text-white capitalize text-left  font-medium text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px]
+  }
+
+  .bannerbutton{
+    @apply   text-white font-Roboto font-[500] text-[20px] bg-[#daa521] rounded-[1px] pt-[9px] mt-[-8px] tb-[17px] px-[60px] h-[51px] transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-black hover:text-white  no-underline 
+  }
+
+  .bannerimage{
+    @apply  transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md
+  }
+
+  .bannerP1{
+    @apply  leading-9 font-normal text-[25px] text-white font-Roboto mt-[50px]
+  }
+
+  .bannerP2{
+    @apply leading-6 font-normal text-[19px] text-white font-sans mt-[20px]
+  }
+
+  .bannerP3{
+    @apply  leading-8 mt-10 font-normal text-[23px] text-white font-Roboto
+  }
+
+ }
 }
