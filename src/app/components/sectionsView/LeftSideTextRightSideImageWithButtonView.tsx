@@ -1,9 +1,12 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { ArrowRightIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRightIcon } from 'lucide-react';
+
 type AddProps = {
   content: string;
 };
@@ -17,64 +20,71 @@ type LeftSideTextRightSideImageWithButton = {
   order: string;
 };
 
+const isImageFormat = (url?: string): boolean =>
+  !!url && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
 
-export default function LeftSideTextRightSideImageWithButtonView({ content }: AddProps): React.JSX.Element {
-
-  const [contentData, setcontentData] = useState<LeftSideTextRightSideImageWithButton | null>(null);
+export default function LeftSideTextRightSideImageWithButtonView({
+  content,
+}: AddProps): React.JSX.Element {
+  const [contentData, setContentData] = useState<LeftSideTextRightSideImageWithButton | null>(null);
 
   useEffect(() => {
-    if (content !== "") {
-      const Details = JSON.parse(content);
-
-      setcontentData(Details)
+    if (!content) return;
+    try {
+      const parsed = JSON.parse(content) as LeftSideTextRightSideImageWithButton;
+      setContentData(parsed);
+    } catch (err) {
+      console.error('Invalid JSON in section:', err);
     }
+  }, [content]);
 
+  const preloadImage = isImageFormat(contentData?.image);
 
+  return (
+    <section className="flex flex-col md:flex-row my-5 md:my-14 bg-[#16252D] max-w-[1420px] w-full mx-auto px-5 md:px-8 py-6">
+      {preloadImage && (
+        <Head>
+          <link
+            rel="preload"
+            as="image"
+            href={contentData!.image}
+            imageSrcSet={`${contentData!.image} 1x`}
+            imageSizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        </Head>
+      )}
 
-  }, [content]); // Runs whenever selectedSection changes
-
-  const isImageFormat = (imageUrl: string | undefined): boolean => {
-    return !!imageUrl && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(imageUrl);
-  };
-  return (<>
-
-    <div className="flex flex-col md:flex-row my-5 md:my-14 bg-[#16252D] max-w-[1420px] w-full m-auto p-1 md:p-5">
-      <div className="flex-1  py-2 px-5 ">
-        <h2 className=" text-[#DAA520] text-left">{contentData?.heading}</h2>
-        <ul className="list-disc pl-5 mt-6 text-white">
-          <div
-            className="text-left p-8 pt-0 singleBlogPage"
-            dangerouslySetInnerHTML={{ __html: contentData?.description || "" }} />
-        </ul>
-        <Link href={contentData?.buttonUrl || '#'}>
-
+      <div className="flex-1 py-2 px-5">
+        <h2 className="text-[#DAA520] text-left text-2xl font-semibold">{contentData?.heading}</h2>
+        <div
+          className="text-left p-6 pt-4 singleBlogPage text-white text-base leading-7"
+          dangerouslySetInnerHTML={{ __html: contentData?.description ?? '' }}
+        />
+        <Link href={contentData?.buttonUrl || '#'} passHref>
           <Button
             size="lg"
             variant="default"
-            className="bg-[#DAA520] text-black mt-10 px-10 ml-3 mb-6 text-[16px] hover:bg-[#DAA520]  hover:-translate-y-1 hover:scale-90 hover:backdrop-blur-md"
+            className="bg-[#DAA520] text-black mt-10 px-10 mb-6 text-[16px] hover:bg-[#DAA520] hover:-translate-y-1 hover:scale-90 hover:backdrop-blur-md transition"
           >
-            {contentData?.buttonText} <ArrowRightIcon className="h-5 w-5" />
+            {contentData?.buttonText} <ArrowRightIcon className="h-5 w-5 ml-2" />
           </Button>
         </Link>
       </div>
-      <div className="flex-1 p-2   ">
-        {isImageFormat(contentData?.image) ? (
-          <Image quality={50} priority
-            sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
 
-            src={contentData?.image || "/logo.png"}
+      <div className="flex-1 p-2">
+        {preloadImage && (
+          <Image
+            src={contentData!.image}
+            alt="section image"
             width={720}
             height={352}
-            alt="home-banner"
-            className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
-          ></Image>
-        ) : (<></>)}
+            quality={60}
+            priority
+            sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 720px"
+            className="rounded transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
+          />
+        )}
       </div>
-    </div>
-
-
-
-
-  </>)
-
+    </section>
+  );
 }

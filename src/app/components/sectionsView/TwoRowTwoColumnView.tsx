@@ -1,8 +1,10 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { ArrowRightIcon } from "lucide-react";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRightIcon } from 'lucide-react';
+
 type AddProps = {
   content: string;
 };
@@ -27,102 +29,48 @@ type TwoRowTwoColumn = {
   description4: string;
 };
 
-
-
 export default function TwoRowTwoColumnView({ content }: AddProps): React.JSX.Element {
-
-  const [contentData, setcontentData] = useState<TwoRowTwoColumn | null>(null);
+  const [contentData, setContentData] = useState<TwoRowTwoColumn | null>(null);
 
   useEffect(() => {
-    if (content !== "") {
-      const Details = JSON.parse(content);
-
-      setcontentData(Details)
+    if (!content) return;
+    try {
+      const parsed = JSON.parse(content) as TwoRowTwoColumn;
+      setContentData(parsed);
+    } catch (err) {
+      console.error('Failed to parse TwoRowTwoColumn content:', err);
     }
+  }, [content]);
 
+  const items = contentData
+    ? [1, 2, 3, 4].map((i) => ({
+      heading: contentData[`heading${i}` as keyof TwoRowTwoColumn] as string,
+      description: contentData[`description${i}` as keyof TwoRowTwoColumn] as string,
+      buttonText: contentData[`buttonText${i}` as keyof TwoRowTwoColumn] as string,
+      buttonUrl: contentData[`buttonUrl${i}` as keyof TwoRowTwoColumn] as string,
+    }))
+    : [];
 
+  const buttonClass =
+    'bg-[#DAA520] hover:bg-[#DAA520] transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-black mt-10 px-14 mb-6 text-[16px]';
 
-  }, [content]); // Runs whenever selectedSection changes
+  return (
+    <section className="bg-black max-w-[1370px] w-full mx-auto px-4 md:px-16 py-10">
+      <h2 className="text-[#DAA520] text-2xl font-semibold mb-8">{contentData?.mainHeading}</h2>
 
-
-  return (<>
-
-    <div className="my-5 md:my-8 lg:my-5 max-w-[1370px] bg-black w-full m-auto p-5  px-1 md:px-16">
-      <h2 className="text-[#DAA520] mt-5 ">{contentData?.mainHeading}</h2>
-
-      <div className="grid  grid-cols-1  min-[460px]:grid-cols-2  md:grid-cols-2  gap-3 max-w-[1370px] w-full m-auto p-1 md:p-2">
-
-        <div className=" p-2 ">
-          <h4 className="text-white text-left font-dm">  {contentData?.heading1}
-          </h4>
-          <p className=" font-dm"> {contentData?.description1}</p>
-          <Link href={contentData?.buttonUrl1 || '#'}>
-
-            <Button
-              size="lg"
-              variant="default"
-              className="bg-[#DAA520] hover:bg-[#DAA520] cursor-alias transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110  text-black mt-10 px-14 ml-3 mb-6 text-[16px]"
-            >
-              {contentData?.buttonText1} <ArrowRightIcon className="h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
-
-
-        <div className=" p-2 ">
-          <h4 className="text-white text-left font-dm">  {contentData?.heading2}
-          </h4>
-          <p className=" font-dm"> {contentData?.description2}</p>
-          <Link href={contentData?.buttonUrl2 || '#'}>
-
-            <Button
-              size="lg"
-              variant="default"
-              className="bg-[#DAA520] hover:bg-[#DAA520] cursor-alias transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110  text-black mt-10 px-14 ml-3 mb-6 text-[16px]"
-            >
-              {contentData?.buttonText2} <ArrowRightIcon className="h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
-
-
-        <div className=" p-2 ">
-          <h4 className="text-white text-left font-dm">  {contentData?.heading3}
-          </h4>
-          <p className=" font-dm"> {contentData?.description3}</p>
-          <Link href={contentData?.buttonUrl3 || '#'}>
-
-            <Button
-              size="lg"
-              variant="default"
-              className="bg-[#DAA520] hover:bg-[#DAA520] cursor-alias transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110  text-black mt-10 px-14 ml-3 mb-6 text-[16px]"
-            >
-              {contentData?.buttonText3} <ArrowRightIcon className="h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
-
-
-        <div className=" p-2 ">
-          <h4 className="text-white text-left font-dm">  {contentData?.heading4}
-          </h4>
-          <p className=" font-dm"> {contentData?.description4}</p>
-          <Link href={contentData?.buttonUrl4 || '#'}>
-
-            <Button
-              size="lg"
-              variant="default"
-              className="bg-[#DAA520] hover:bg-[#DAA520] cursor-alias transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110  text-black mt-10 px-14 ml-3 mb-6 text-[16px]"
-            >
-              {contentData?.buttonText4} <ArrowRightIcon className="h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
-
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {items.map(({ heading, description, buttonText, buttonUrl }, idx) => (
+          <div key={idx} className="p-4 border border-white rounded">
+            <h4 className="text-white text-left font-dm text-lg mb-2">{heading}</h4>
+            <p className="text-white font-dm mb-4">{description}</p>
+            <Link href={buttonUrl || '#'}>
+              <Button size="lg" variant="default" className={buttonClass}>
+                {buttonText} <ArrowRightIcon className="h-5 w-5 ml-2" />
+              </Button>
+            </Link>
+          </div>
+        ))}
       </div>
-    </div>
-
-  </>)
-
+    </section>
+  );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import localFont from 'next/font/local';
@@ -29,13 +30,18 @@ const georgia = localFont({
   display: 'swap',
 });
 
+const isImageFormat = (url?: string): boolean =>
+  !!url && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
+
+const headingClass = `${georgia.className || 'font-serif'} capitalize text-left font-medium text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] md:leading-[70px] lg:leading-[92px]`;
+
 const PageBannerView = ({ content }: AddProps): React.JSX.Element => {
   const [contentData, setContentData] = useState<PageBanner | null>(null);
 
   useEffect(() => {
     if (content) {
       try {
-        const parsed = JSON.parse(content);
+        const parsed = JSON.parse(content) as PageBanner;
         setContentData(parsed);
       } catch (err) {
         console.error('Invalid JSON in banner content:', err);
@@ -43,13 +49,22 @@ const PageBannerView = ({ content }: AddProps): React.JSX.Element => {
     }
   }, [content]);
 
-  const isImageFormat = (url?: string): boolean =>
-    !!url && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
-
-  const headingClass = `${georgia.className || 'font-serif'} capitalize text-left font-medium text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] md:leading-[70px] lg:leading-[92px]`;
+  const preloadTarget = contentData?.rightImage && isImageFormat(contentData.rightImage);
 
   return (
     <section className="bg-[rgb(42,108,101)] w-full h-[850px] p-4">
+      {preloadTarget && (
+        <Head>
+          <link
+            rel="preload"
+            as="image"
+            href={contentData!.rightImage}
+            imageSrcSet={`${contentData!.rightImage} 1x`}
+            imageSizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        </Head>
+      )}
+
       <div className="flex flex-col sm:flex-row max-w-[1370px] w-full mx-auto">
         {/* Left Column */}
         <div className="flex-[1.2] lg:ml-16 md:ml-5 sm:ml-1">
