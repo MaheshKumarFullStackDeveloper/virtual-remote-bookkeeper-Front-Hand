@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import { Roboto } from "next/font/google";
-import { DM_Sans } from "next/font/google";
+import { Poppins } from "@next/font/google";
+import { Roboto } from "@next/font/google";
+import { DM_Sans } from "@next/font/google";
 import { ToastContainer } from "react-toastify";
 import { Suspense } from "react";
 import Header from "./components/Header";

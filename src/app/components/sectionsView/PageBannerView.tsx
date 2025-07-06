@@ -14,12 +14,7 @@ const georgia = localFont({
       path: "../../../../public/font/Georgia.woff2",
       weight: "normal",
       style: "normal",
-    },
-    {
-      path: "../../../../public/font/Georgia.woff",
-      weight: "normal",
-      style: "normal",
-    },
+    }
   ],
   display: "swap",
 });
