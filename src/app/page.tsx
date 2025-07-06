@@ -1,5 +1,5 @@
 import React from "react";
-import { Sections } from "@/lib/types/types";
+import { Page, Sections } from "@/lib/types/types";
 import MainLoader from "@/lib/MainLoader";
 import BlankHtmlView from "./components/sectionsView/BlankHtmlView";
 import LeftSideImageRightSideContactFormView from "./components/sectionsView/LeftSideImageRightSideContactFormView";
@@ -15,11 +15,9 @@ import LatestBlogArticle from "./components/LatestBlogArticle";
 import PageBannerView from "./components/sectionsView/PageBannerView";
 import LeftSideContactFormtRightSideTextViewView from "./components/sectionsView/LeftSideContactFormtRightSideTextView";
 import LeftSideTextRightSideContactFormViewView from "./components/sectionsView/LeftSideTextRightSideContactFormView";
-import { store } from "./store/store";
-import { fetchData } from "./store/slice/dataSlice";
 
 
-/* const basenewUrl = process.env.NEXT_PUBLIC_API; // Load from .env 
+const basenewUrl = process.env.NEXT_PUBLIC_API; // Load from .env 
 
 
 const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
@@ -61,16 +59,13 @@ async function getPagedata(page: string) {
     return undefined;
   }
 }
- */
+
 
 
 
 export default async function Home() {
 
-  //const HomeContent = await getPagedata('home') as Page;
-  await store.dispatch(fetchData('home'));
-  const state = store.getState().data;
-  const HomeContent = state?.data;
+  const HomeContent = await getPagedata('home') as Page;
   const sections = HomeContent?.sections;
 
   if (!HomeContent || sections === undefined || sections === null) {
