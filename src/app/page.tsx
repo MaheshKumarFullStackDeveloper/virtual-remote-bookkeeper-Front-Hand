@@ -1,20 +1,53 @@
 import React from "react";
 import { Page, Sections } from "@/lib/types/types";
-import MainLoader from "@/lib/MainLoader";
-import BlankHtmlView from "./components/sectionsView/BlankHtmlView";
-import LeftSideImageRightSideContactFormView from "./components/sectionsView/LeftSideImageRightSideContactFormView";
-import LeftSideTextRightSideImageView from "./components/sectionsView/LeftSideTextRightSideImageView";
-import OneRowThreeColumnView from "./components/sectionsView/OneRowThreeColumnView";
-import LeftSideTextRightSideImageWithButtonView from "./components/sectionsView/LeftSideTextRightSideImageWithButtonView";
-import TwoRowTwoColumnView from "./components/sectionsView/TwoRowTwoColumnView";
-import OneRowTwoColumnView from "./components/sectionsView/OneRowTwoColumnView";
-import TopTextBottomContactFormView from "./components/sectionsView/TopTextBottomContactFormView";
-import LeftSideImageRightSideTextView from "./components/sectionsView/LeftSideImageRightSideTextView";
-import FAQView from "./components/sectionsView/FAQView";
-import LatestBlogArticle from "./components/LatestBlogArticle";
-import PageBannerView from "./components/sectionsView/PageBannerView";
-import LeftSideContactFormtRightSideTextViewView from "./components/sectionsView/LeftSideContactFormtRightSideTextView";
-import LeftSideTextRightSideContactFormViewView from "./components/sectionsView/LeftSideTextRightSideContactFormView";
+import dynamic from 'next/dynamic';
+
+const MainLoader = dynamic(() => import('@/lib/MainLoader'), {
+  loading: () => <p>Loading...</p>,
+});
+const BlankHtmlView = dynamic(() => import('./components/sectionsView/BlankHtmlView'), {
+  loading: () => <p>Loading...</p>,
+});
+const LeftSideImageRightSideContactFormView = dynamic(() => import('./components/sectionsView/LeftSideImageRightSideContactFormView'), {
+  loading: () => <p>Loading...</p>,
+});
+const LeftSideTextRightSideImageView = dynamic(() => import('./components/sectionsView/LeftSideTextRightSideImageView'), {
+  loading: () => <p>Loading...</p>,
+});
+const OneRowThreeColumnView = dynamic(() => import('./components/sectionsView/OneRowThreeColumnView'), {
+  loading: () => <p>Loading...</p>,
+});
+const LeftSideTextRightSideImageWithButtonView = dynamic(() => import('./components/sectionsView/LeftSideTextRightSideImageWithButtonView'), {
+  loading: () => <p>Loading...</p>,
+});
+const TwoRowTwoColumnView = dynamic(() => import('./components/sectionsView/TwoRowTwoColumnView'), {
+  loading: () => <p>Loading...</p>,
+});
+const OneRowTwoColumnView = dynamic(() => import('./components/sectionsView/OneRowTwoColumnView'), {
+  loading: () => <p>Loading...</p>,
+});
+const TopTextBottomContactFormView = dynamic(() => import('./components/sectionsView/TopTextBottomContactFormView'), {
+  loading: () => <p>Loading...</p>,
+});
+const LeftSideImageRightSideTextView = dynamic(() => import('./components/sectionsView/LeftSideImageRightSideTextView'), {
+  loading: () => <p>Loading...</p>,
+});
+const FAQView = dynamic(() => import('./components/sectionsView/FAQView'), {
+  loading: () => <p>Loading...</p>,
+});
+const LatestBlogArticle = dynamic(() => import('./components/LatestBlogArticle'), {
+  loading: () => <p>Loading...</p>,
+});
+const PageBannerView = dynamic(() => import('./components/sectionsView/PageBannerView'), {
+  loading: () => <p>Loading...</p>,
+});
+const LeftSideContactFormtRightSideTextViewView = dynamic(() => import('./components/sectionsView/LeftSideContactFormtRightSideTextView'), {
+  loading: () => <p>Loading...</p>,
+});
+const LeftSideTextRightSideContactFormViewView = dynamic(() => import('./components/sectionsView/LeftSideTextRightSideContactFormView'), {
+  loading: () => <p>Loading...</p>,
+});
+
 
 
 const basenewUrl = process.env.NEXT_PUBLIC_API; // Load from .env 
