@@ -87,7 +87,7 @@ const Carousel = ({ catId }: { catId: string }) => {
 
                 width={500}
                 height={300}
-                src={`${slide.image}` || "/default-image.png"}
+                src={`${slide.image}` || "/logo.png"}
                 alt={`Slide ${index + 1}`}
                 className=""
               />

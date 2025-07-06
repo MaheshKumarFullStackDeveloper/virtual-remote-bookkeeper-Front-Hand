@@ -57,13 +57,13 @@ const PageBannerView = ({ content }: AddProps): React.JSX.Element => {
             {contentData?.topHeading}
           </p>
 
-          <h1 className={`text-[#DAA520] border-b-4 border-[#DAA520] rounded-md ${headingClass}`}>
+          <span className={`text-[#DAA520] border-b-4 border-[#DAA520] rounded-md ${headingClass}`}>
             {contentData?.mainHeading1}
-          </h1>
+          </span>
 
-          <h2 className={`text-white ${headingClass}`}>{contentData?.mainHeading2}</h2>
-
-          <h3 className={`text-white ${headingClass}`}>{contentData?.mainHeading3}</h3>
+          <span className={`text-white ${headingClass}`}>{contentData?.mainHeading2}</span>
+          <br />
+          <span className={`text-white ${headingClass}`}>{contentData?.mainHeading3}</span>
 
           <p className="text-white font-sans text-[19px] font-normal leading-6 mt-[20px]">
             {contentData?.bottomHeading}
