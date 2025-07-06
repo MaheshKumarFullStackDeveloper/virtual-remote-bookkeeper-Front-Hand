@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, RegisterOptions } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
@@ -65,7 +65,7 @@ export default function ContactForm(): React.JSX.Element {
     name: keyof ContactFormData,
     placeholder: string,
     type: string,
-    rules: any
+    rules: RegisterOptions<ContactFormData, keyof ContactFormData>
   ) => (
     <div className="px-1">
       <Input
