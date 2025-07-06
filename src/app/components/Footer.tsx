@@ -1,87 +1,87 @@
-"use client";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { selectfooterCopywrite, selectFooterLogo, selectFooterMenu, selectFooterText } from "../store/slice/dataSlice";
-import { useAppSelector } from "../store/hooks/hooks";
+'use client';
+
+import React from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import {
+  selectfooterCopywrite,
+  selectFooterLogo,
+  selectFooterMenu,
+  selectFooterText,
+} from '../store/slice/dataSlice';
+import { useAppSelector } from '../store/hooks/hooks';
 
 interface FooterMenu {
   title: string;
   link: string;
 }
 
-
-
-function Footer() {
+export default function Footer(): React.JSX.Element {
   const footerLogo = useAppSelector(selectFooterLogo);
   const footerText = useAppSelector(selectFooterText);
   const footerCopywrite = useAppSelector(selectfooterCopywrite);
   const footerMenu: FooterMenu[] | null = useAppSelector(selectFooterMenu);
 
+  const shouldPreloadLogo = typeof footerLogo === 'string';
 
-  //console.log("footwe meni", footerMenu)
   return (
-    <>
-      {" "}
-      <footer className="border-b bg-black  ">
-        <div className="container  mx-auto max-w-[1400px] px-[12px] pt-[70px]  flex flex-col md:flex-row items-center justify-between ">
-          <div className="flex-1 items-start justify-start  text-white mb-12 ">
-            <div className="w-[100%] text-left mb-[57px]">
-              <Link
-                href="/"
-                className="flex-1 justify-start items-left mb-[6px]"
-              >
-                {footerLogo !== null ? (<Image quality={50} priority
-                  sizes="(max-width: 600px) 300px, (max-width: 1024px) 600px, 993px"
+    <footer className="bg-black border-b text-white">
+      {shouldPreloadLogo && (
+        <Head>
+          <link
+            rel="preload"
+            as="image"
+            href={footerLogo}
+            imageSrcSet={`${footerLogo} 1x`}
+            imageSizes="134px"
+          />
+        </Head>
+      )}
 
-                  src={footerLogo}
-                  width={134}
-                  height={134}
-                  alt="logo"
-                  className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
-                ></Image>) : (<></>)}
-
-              </Link>
-            </div>
-            <div>
-              <p>{footerText}</p>
-            </div>
-          </div>
-          <div className="flex flex-col  flex-1 items-center justify-center  text-white  px-4  mb-[30px]">
-            <h4 className="max-w-[300px] w-[100%] mt-0 mb-[30px] pr-0 text-[1.777rem] leading-snug font-medium capitalize font-stretch-condensed font-sans clear-both m-auto text-left text-white ">
-              <span className="text-[#fe6b01] text-[30px] pr-[10px] "> -</span>Quick Links
-            </h4>
-            <div className=" float-none m-auto flex flex-col ">
-              <ul className="w-auto">
-
-                {footerMenu && footerMenu.map((item: FooterMenu, index: number) => (
-                  <li key={index}>
-                    <Link href={item.link} className="block px-[15px] py-2 font-medium text-white uppercase text-[0.875rem] tracking-[0.188rem] hover:text-[#2bbdcc] transform transition duration-300">
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-
-
-
-
-
-              </ul>
-            </div>
-          </div>
+      <div className="max-w-[1400px] mx-auto px-4 pt-16 flex flex-col md:flex-row items-center md:items-start justify-between">
+        {/* Logo & Description */}
+        <div className="flex-1 mb-12 md:mb-0">
+          <Link href="/" className="inline-block mb-6">
+            {footerLogo && (
+              <Image
+                src={footerLogo}
+                alt="Footer Logo"
+                width={134}
+                height={134}
+                quality={50}
+                priority
+                sizes="134px"
+                className="transition duration-300 hover:scale-110 hover:-translate-y-1 hover:bg-indigo-500"
+              />
+            )}
+          </Link>
+          <p className="max-w-md leading-relaxed">{footerText}</p>
         </div>
 
-        <div className="container  mx-auto max-w-[1400px] py-[30px] border-t-[1px] border-[#0e1527] ">
-          <div className="row">
-            <div className="m-0 text-left text-white text-[0.875rem]">
-              <span className="copyright">{footerCopywrite}</span>
-            </div>
-          </div>
-
+        {/* Quick Links */}
+        <div className="flex-1 text-left px-4">
+          <h4 className="text-[1.777rem] font-medium font-sans mb-6">
+            <span className="text-[#fe6b01] text-[30px] pr-2">-</span>Quick Links
+          </h4>
+          <ul className="flex flex-col gap-2">
+            {footerMenu?.map((item, idx) => (
+              <li key={idx}>
+                <Link
+                  href={item.link}
+                  className="block font-medium uppercase text-sm tracking-[0.188rem] hover:text-[#2bbdcc] transition-colors"
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-      </footer>
-    </>
+      </div>
+
+      <div className="max-w-[1400px] mx-auto border-t border-[#0e1527] py-6 px-4 mt-12">
+        <p className="text-sm text-left">{footerCopywrite}</p>
+      </div>
+    </footer>
   );
 }
-
-export default Footer;
