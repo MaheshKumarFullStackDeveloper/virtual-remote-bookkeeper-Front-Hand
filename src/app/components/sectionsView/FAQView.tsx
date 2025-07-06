@@ -1,6 +1,13 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+
 type AddProps = {
   content: string;
 };
@@ -14,80 +21,81 @@ type FAQ = {
   title: string;
   content: string;
 };
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
-
-const baseUrl = process.env.NEXT_PUBLIC_API; // Load from .env
 interface PaginatedResponse {
   data: FAQ[];
 }
-const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
-//blog?page=${page}&limit=${limit}
+
+const baseUrl = process.env.NEXT_PUBLIC_API ?? '';
+const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
+// ✅ Optimized fetch with revalidation intent
 const fetchFaqs = async (
-  limit?: number, // Optional parameter for category
-  categorySlug?: string | null // Optional parameter for category
+  limit = 20,
+  categorySlug: string = ''
 ): Promise<PaginatedResponse> => {
-
-  const res = await fetch(`${baseUrl}/faq/bycatslug?page=1&limit=${limit}&slug=${categorySlug}`, {
-    headers: {
-      origin: homeUrl ?? ""
+  const res = await fetch(
+    `${baseUrl}/faq/bycatslug?page=1&limit=${limit}&slug=${categorySlug}`,
+    {
+      headers: {
+        origin: homeUrl,
+        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=60',
+        'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
+      },
+      // Note: `cache: 'force-cache'` has no effect here since this is client-side
+      next: { revalidate: 60 }, // Safe for server if moved later
     }
-  });
+  );
   const response = await res.json();
-
-  return { data: response.data.faqsList };
+  return { data: response?.data?.faqsList ?? [] };
 };
-export default function FAQView({ content }: AddProps): React.JSX.Element {
 
-  const [contentData, setcontentData] = useState<CONTENT | null>(null);
+export default function FAQView({ content }: AddProps): React.JSX.Element {
+  const [contentData, setContentData] = useState<CONTENT | null>(null);
   const [faqs, setFaqsData] = useState<FAQ[] | null>(null);
 
   useEffect(() => {
-    if (content !== "") {
-      const Details = JSON.parse(content);
-
-      setcontentData(Details)
+    if (!content) return;
+    try {
+      const parsed = JSON.parse(content) as CONTENT;
+      setContentData(parsed);
+    } catch (err) {
+      console.error('Invalid FAQ content JSON:', err);
     }
+  }, [content]);
 
-
-
-
-  }, [content]); // Runs whenever selectedSection changes
   useEffect(() => {
-    const loadFaqs = async () => {
-      setFaqsData(null);
-      const response = await fetchFaqs(20, contentData?.categorySlug); // response is PaginatedResponse
+    if (!contentData?.categorySlug) return;
 
-      setFaqsData(response.data); // ✅ now you're setting FAQ[]
+    const loadFaqs = async () => {
+      const response = await fetchFaqs(20, contentData.categorySlug);
+      setFaqsData(response.data);
     };
 
     loadFaqs();
   }, [contentData]);
 
-  return (<>
-    <div className="my-5 md:my-8 lg:my-11 max-w-[1370px] w-full m-auto p-5">
-      <h2>{contentData?.heading} </h2>
+  return (
+    <div className="my-5 md:my-8 lg:my-11 max-w-[1370px] w-full mx-auto p-5">
+      <h2 className="text-2xl font-semibold text-center">{contentData?.heading}</h2>
 
-      <Accordion type="single" collapsible className="w-full">
-
-        {faqs && faqs !== null && faqs.map((slide: FAQ, index: number) => (
-          <AccordionItem key={index} value={`item - ${index}`}>
-            <AccordionTrigger className="p-4 text-[20px] hover:no-underline cursor-pointer leading-[28px] font-bold font-georgia font-stretch-condensed capitalize bg-[#eee]">{slide?.title}</AccordionTrigger>
-            <AccordionContent className="border border-solid border-[#cacaca] AccordionContents text-[#dd9933] p-4 text-[16px] font-normal font-mono leading-[25px] "><div
-              className="text-left p-8 pt-0 "
-              dangerouslySetInnerHTML={{ __html: slide?.content }}
-            /></AccordionContent>
-          </AccordionItem>
-        ))}
-
-
-      </Accordion>
+      {faqs && (
+        <Accordion type="single" collapsible className="w-full mt-6">
+          {faqs.map((item, idx) => (
+            <AccordionItem key={idx} value={`item-${idx}`}>
+              <AccordionTrigger className="p-4 text-[20px] cursor-pointer leading-[28px] font-bold font-georgia capitalize bg-[#eee]">
+                {item.title}
+              </AccordionTrigger>
+              <AccordionContent className="border border-[#cacaca] text-[#dd9933] text-[16px] font-mono leading-[25px] p-4">
+                <div
+                  className="text-left p-4 pt-0"
+                  dangerouslySetInnerHTML={{ __html: item.content }}
+                />
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      )}
     </div>
-  </>)
-
+  );
 }
