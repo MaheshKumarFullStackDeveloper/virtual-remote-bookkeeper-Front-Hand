@@ -59,11 +59,10 @@ async function getPagedata(page: string) {
   try {
     const response = await fetch(`${basenewUrl}/page/${page}`, {
       headers: {
-        origin: homeUrl ?? "",
-        'Cache-Control': 'public, s-maxage=1',
-        'CDN-Cache-Control': 'public, s-maxage=60',
+        origin: homeUrl || "",
+        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=60',
         'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
-      }
+      },
     });
 
     // Check if response is JSON before parsing
@@ -114,25 +113,27 @@ export default async function Home() {
 
     return (
       <>
-        {sections && sections.map((section: Sections, index) => (
-          <React.Fragment key={index}>
-            {section.title === 'BlankHtml' && <BlankHtmlView content={section.content} />}
-            {section.title === 'PageBanner' && <PageBannerView content={section.content} />}
-            {section.title === 'LeftSideContactFormtRightSideText' && <LeftSideContactFormtRightSideTextViewView content={section.content} />}
-            {section.title === 'LeftSideTextRightSideContactForm' && <LeftSideTextRightSideContactFormViewView content={section.content} />}
+        {sections.map((section: Sections, idx) => {
+          const props = { content: section.content };
+          switch (section.title) {
+            case 'BlankHtml': return <BlankHtmlView key={idx} {...props} />;
+            case 'PageBanner': return <PageBannerView key={idx} {...props} />;
+            case 'LeftSideContactFormtRightSideText': return <LeftSideContactFormtRightSideTextViewView key={idx} {...props} />;
+            case 'LeftSideTextRightSideContactForm': return <LeftSideTextRightSideContactFormViewView key={idx} {...props} />;
+            case 'LeftSideImageRightSideContactForm': return <LeftSideImageRightSideContactFormView key={idx} {...props} />;
+            case 'LeftSideTextRightSideImage': return <LeftSideTextRightSideImageView key={idx} {...props} />;
+            case 'OneRowThreeColumn': return <OneRowThreeColumnView key={idx} {...props} />;
+            case 'LeftSideTextRightSideImageWithButton': return <LeftSideTextRightSideImageWithButtonView key={idx} {...props} />;
+            case 'TwoRowTwoColumn': return <TwoRowTwoColumnView key={idx} {...props} />;
+            case 'OneRowTwoColumn': return <OneRowTwoColumnView key={idx} {...props} />;
+            case 'TopTextBottomContactForm': return <TopTextBottomContactFormView key={idx} {...props} />;
+            case 'LeftSideImageRightSideText': return <LeftSideImageRightSideTextView key={idx} {...props} />;
+            case 'FAQ': return <FAQView key={idx} {...props} />;
+            case 'Blog': return <LatestBlogArticle key={idx} {...props} />;
+            default: return null;
+          }
+        })}
 
-            {section.title === 'LeftSideImageRightSideContactForm' && <LeftSideImageRightSideContactFormView content={section.content} />}
-            {section.title === 'LeftSideTextRightSideImage' && <LeftSideTextRightSideImageView content={section.content} />}
-            {section.title === 'OneRowThreeColumn' && <OneRowThreeColumnView content={section.content} />}
-            {section.title === 'LeftSideTextRightSideImageWithButton' && <LeftSideTextRightSideImageWithButtonView content={section.content} />}
-            {section.title === 'TwoRowTwoColumn' && <TwoRowTwoColumnView content={section.content} />}
-            {section.title === 'OneRowTwoColumn' && <OneRowTwoColumnView content={section.content} />}
-            {section.title === 'TopTextBottomContactForm' && <TopTextBottomContactFormView content={section.content} />}
-            {section.title === 'LeftSideImageRightSideText' && <LeftSideImageRightSideTextView content={section.content} />}
-            {section.title === 'FAQ' && <FAQView content={section.content} />}
-            {section.title === 'Blog' && <LatestBlogArticle content={section.content} />}
-          </React.Fragment>
-        ))}
 
       </>
     );
