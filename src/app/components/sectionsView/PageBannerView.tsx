@@ -87,7 +87,7 @@ const PageBannerView = ({ content }: AddProps): React.JSX.Element => {
             <div className="flex-1">
               {isImageFormat(contentData?.leftImage) && (
                 <Image
-                  src={contentData?.leftImage}
+                  src={contentData?.leftImage || "/logo.png"}
                   alt="Left image"
                   width={300}
                   height={80}
