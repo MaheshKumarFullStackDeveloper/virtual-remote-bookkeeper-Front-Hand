@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import localFont from 'next/font/local';
 import { Button } from '@/components/ui/button';
 
 type AddProps = {
