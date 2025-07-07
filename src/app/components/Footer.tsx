@@ -11,6 +11,7 @@ import {
   selectFooterText,
 } from '../store/slice/dataSlice';
 import { useAppSelector } from '../store/hooks/hooks';
+import { footerMenus } from '@/lib/types/types';
 
 interface FooterMenu {
   title: string;
@@ -56,32 +57,36 @@ export default function Footer(): React.JSX.Element {
               />
             )}
           </Link>
-          <p className="max-w-md leading-relaxed">{footerText}</p>
+          <p className="leading-relaxed">{footerText}</p>
         </div>
 
         {/* Quick Links */}
-        <div className="flex-1 text-left px-4">
-          <h4 className="text-[1.777rem] font-medium font-sans mb-6">
-            <span className="text-[#fe6b01] text-[30px] pr-2">-</span>Quick Links
+        <div className="flex flex-col  flex-1 items-center justify-center  text-white  px-4  mb-[30px]">
+          <h4 className="max-w-[300px] w-[100%] mt-0 mb-[30px] pr-0 text-[1.777rem] leading-snug font-medium capitalize font-stretch-condensed font-sans clear-both m-auto text-left text-white ">
+            <span className="text-[#fe6b01] text-[30px] pr-[10px] "> -</span>Quick Links
           </h4>
-          <ul className="flex flex-col gap-2">
-            {footerMenu?.map((item, idx) => (
-              <li key={idx}>
-                <Link
-                  href={item.link}
-                  className="block font-medium uppercase text-sm tracking-[0.188rem] hover:text-[#2bbdcc] transition-colors"
-                >
-                  {item.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className=" float-none m-auto flex flex-col ">
+            <ul className="w-auto">
+
+              {footerMenu && footerMenu.map((item, index: number) => (
+                <li key={index}>
+
+                  <Link href={`${item.link}`}
+                    className="block px-[15px] py-2 font-medium text-white uppercase text-[0.875rem] tracking-[0.188rem] hover:text-[#2bbdcc] transform transition duration-300" >{item.title} </Link>
+                </li>
+              ))}
+
+
+
+
+            </ul>
+          </div>
         </div>
       </div>
 
       <div className="max-w-[1400px] mx-auto border-t border-[#0e1527] py-6 px-4 mt-12">
         <p className="text-sm text-left">{footerCopywrite}</p>
       </div>
-    </footer>
+    </footer >
   );
 }

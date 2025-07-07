@@ -76,8 +76,8 @@ export default function FAQView({ content }: AddProps): React.JSX.Element {
   }, [contentData]);
 
   return (
-    <div className="my-5 md:my-8 lg:my-11 max-w-[1370px] w-full mx-auto p-5">
-      <h2 className="text-2xl font-semibold text-center">{contentData?.heading}</h2>
+    <div className="my-5 md:my-8 lg:my-11 max-w-[1100px] w-full mx-auto p-5">
+      <h2 className=" text-center">{contentData?.heading}</h2>
 
       {faqs && (
         <Accordion type="single" collapsible className="w-full mt-6">
@@ -88,7 +88,7 @@ export default function FAQView({ content }: AddProps): React.JSX.Element {
               </AccordionTrigger>
               <AccordionContent className="border border-[#cacaca] text-[#dd9933] text-[16px] font-mono leading-[25px] p-4">
                 <div
-                  className="text-left p-4 pt-0"
+                  className="text-left p-4 pt-0 pagesec1"
                   dangerouslySetInnerHTML={{ __html: item.content }}
                 />
               </AccordionContent>

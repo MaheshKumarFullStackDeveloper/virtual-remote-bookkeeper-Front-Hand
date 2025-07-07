@@ -63,12 +63,12 @@ export default function OneRowThreeColumnView({ content }: AddProps): React.JSX.
         <div className="bg-[#B1ADA4] flex-1 p-3 mb-3"  >
           <h1 className="text-[#dbc100] text-[49px] mt-3 mb-8">3 </h1>
           <p className="text-center w-full m-auto">
-            <strong className="text-[18px] text-white leading-[31px]  uppercase">
+            <strong className="text-[18px] font-mono text-white leading-[31px]  uppercase">
               {contentData?.heading3}
             </strong>
           </p>
           <p className="text-center w-full m-auto px-6 mb-10">
-            <span className="text-[16px] text-white leading-[31px]  " dangerouslySetInnerHTML={{ __html: contentData?.description3 || "" }} />
+            <span className="text-[16px] text-white font-mono leading-[31px]  " dangerouslySetInnerHTML={{ __html: contentData?.description3 || "" }} />
           </p>
         </div>
 

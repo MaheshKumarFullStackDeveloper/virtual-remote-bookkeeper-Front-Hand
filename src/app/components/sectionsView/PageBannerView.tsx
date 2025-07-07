@@ -25,15 +25,12 @@ type PageBanner = {
   order: string;
 };
 
-const georgia = localFont({
-  src: [{ path: '../../../../public/font/Georgia.woff2', weight: 'normal', style: 'normal' }],
-  display: 'swap',
-});
+
 
 const isImageFormat = (url?: string): boolean =>
   !!url && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
 
-const headingClass = `${georgia.className || 'font-serif'} capitalize text-left font-medium text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] md:leading-[70px] lg:leading-[92px]`;
+const headingClass = `font-georgia capitalize text-left font-medium text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] md:leading-[70px] lg:leading-[92px]`;
 
 const PageBannerView = ({ content }: AddProps): React.JSX.Element => {
   const [contentData, setContentData] = useState<PageBanner | null>(null);

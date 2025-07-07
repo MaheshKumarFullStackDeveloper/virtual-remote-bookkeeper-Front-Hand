@@ -128,12 +128,28 @@
   h2 {
     @apply text-[3.157rem]
   }
+  
   h3 {
     @apply  text-[2.369rem]
   }
   h4 {
     @apply  text-[1.777rem]
   }
+    
+@media (max-width: 900px) {
+  h1 {  @apply  text-[2.609rem] }
+
+  h2 {
+    @apply text-[2rem]
+  }
+  
+  h3 {
+    @apply  text-[1.369rem]
+  }
+  h4 {
+    @apply  text-[1rem]
+  }
+}
   p{
     @apply  text-[16px] text-white leading-[1.66em]
   }

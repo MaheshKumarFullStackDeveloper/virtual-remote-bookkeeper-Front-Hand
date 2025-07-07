@@ -55,18 +55,18 @@ export default function LeftSideTextRightSideImageWithButtonView({
       )}
 
       <div className="flex-1 py-2 px-5">
-        <h2 className="text-[#DAA520] text-left text-2xl font-semibold">{contentData?.heading}</h2>
+        <h2 className="text-[#DAA520] text-left ">{contentData?.heading}</h2>
         <div
-          className="text-left p-6 pt-4 singleBlogPage text-white text-base leading-7"
+          className="text-left p-6 pt-4 singleBlogPage pagesec1 font-mono text-white text-base leading-7"
           dangerouslySetInnerHTML={{ __html: contentData?.description ?? '' }}
         />
         <Link href={contentData?.buttonUrl || '#'} passHref>
           <Button
             size="lg"
             variant="default"
-            className="bg-[#DAA520] text-black mt-10 px-10 mb-6 text-[16px] hover:bg-[#DAA520] hover:-translate-y-1 hover:scale-90 hover:backdrop-blur-md transition"
+            className="bg-[#DAA520] text-black mt-10 px-10 ml-3 mb-6 text-[16px] hover:bg-[#DAA520]  hover:-translate-y-1 hover:scale-90 hover:backdrop-blur-md"
           >
-            {contentData?.buttonText} <ArrowRightIcon className="h-5 w-5 ml-2" />
+            {contentData?.buttonText} <ArrowRightIcon className="h-5 w-5 " />
           </Button>
         </Link>
       </div>
@@ -81,7 +81,7 @@ export default function LeftSideTextRightSideImageWithButtonView({
             quality={60}
             priority
             sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 720px"
-            className="rounded transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
+            className="mt-7 rounded transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
           />
         )}
       </div>

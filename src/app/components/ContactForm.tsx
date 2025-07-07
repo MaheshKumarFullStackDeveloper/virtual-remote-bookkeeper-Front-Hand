@@ -128,16 +128,18 @@ export default function ContactForm(): React.JSX.Element {
             </span>
           )}
         </div>
-        <div className="px-1">
+        <div className="px-1 text-left">
           <Button
             type="submit"
-            className="bg-[#daa521] text-white font-semibold uppercase tracking-[0.15em] px-10 h-[51px] hover:bg-black hover:text-white transition hover:-translate-y-1 hover:scale-110"
+            className="bg-[#daa521] text-white rounded-[1px] font-semibold uppercase tracking-[0.15em] px-10 h-[51px] hover:bg-black hover:text-white transition hover:-translate-y-1 hover:scale-110"
             disabled={loading}
           >
             {loading ? (
               <Loader2 className="animate-spin mr-2" size={24} />
             ) : (
-              <span>Request</span>
+              <span className=" after:content-['']  after:ml-2.5 after:inline-block after:bg-[#2bbdcc] after:right-[17px] after:h-1.5 after:w-1.5 after:transition-all after:duration-200 after:ease-in-out after:top-[50%]  after:transform after:-translate-x-1/2 after:-translate-y-1/2  ">
+                Request{" "}
+              </span>
             )}
           </Button>
         </div>

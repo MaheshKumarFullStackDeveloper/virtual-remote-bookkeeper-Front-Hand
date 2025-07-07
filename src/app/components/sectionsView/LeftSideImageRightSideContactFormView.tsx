@@ -60,8 +60,9 @@ export default function LeftSideImageRightSideContactFormView({ content }: AddPr
             />
           )}
         </div>
-        <div className="flex-1 bg-black text-white border border-white p-6 text-left shadow-md">
-          <QuickContact />
+        <div className="w-full sm:flex-1  p-6">
+          <div className=' bg-black text-white border border-white p-6 text-left shadow-md'>
+            <QuickContact /></div>
         </div>
       </div>
     </section>

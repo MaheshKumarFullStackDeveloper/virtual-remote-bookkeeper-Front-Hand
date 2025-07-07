@@ -60,7 +60,7 @@ export default async function RootLayout({
     <Suspense fallback={<MainLoader />}>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${poppins.className} ${roboto.className} ${dmSans.className}`}
+          className={`${roboto.className} ${poppins.className}  ${dmSans.className}`}
         >
           <LayoutWrapper initialHeaderFooter={sanitizedHeaderFooter}>
             <Header />
