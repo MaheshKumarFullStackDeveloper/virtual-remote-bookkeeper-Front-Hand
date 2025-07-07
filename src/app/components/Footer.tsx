@@ -11,7 +11,7 @@ import {
   selectFooterText,
 } from '../store/slice/dataSlice';
 import { useAppSelector } from '../store/hooks/hooks';
-import { footerMenus } from '@/lib/types/types';
+
 
 interface FooterMenu {
   title: string;
