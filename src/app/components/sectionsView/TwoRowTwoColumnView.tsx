@@ -56,13 +56,13 @@ export default function TwoRowTwoColumnView({ content }: AddProps): React.JSX.El
 
   return (
     <section className="bg-black max-w-[1370px] w-full mx-auto px-4 md:px-16 py-10">
-      <h2 className="text-[#DAA520] text-2xl font-semibold mb-8">{contentData?.mainHeading}</h2>
+      <h2 className="text-[#DAA520]  mb-8">{contentData?.mainHeading}</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {items.map(({ heading, description, buttonText, buttonUrl }, idx) => (
           <div key={idx} className="p-4 border border-white rounded">
-            <h4 className="text-white text-left font-dm text-lg mb-2">{heading}</h4>
-            <p className="text-white font-dm mb-4">{description}</p>
+            <h4 className="text-white text-left dm font-mono">{heading}</h4>
+            <p className="text-white font-mono m">{description}</p>
             <Link href={buttonUrl || '#'}>
               <Button size="lg" variant="default" className={buttonClass}>
                 {buttonText} <ArrowRightIcon className="h-5 w-5 ml-2" />

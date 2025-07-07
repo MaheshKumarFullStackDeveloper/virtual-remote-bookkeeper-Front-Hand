@@ -93,7 +93,7 @@ const LatestBlogArticle = ({ content }: AddProps): React.JSX.Element => {
         </Head>
       )}
 
-      <h2 className="text-3xl font-semibold">{contentData?.heading}</h2>
+      <h2 className="">{contentData?.heading}</h2>
       <p className="my-12 text-[#596475]">{contentData?.description}</p>
 
       {posts.length ? (
@@ -112,9 +112,10 @@ const LatestBlogArticle = ({ content }: AddProps): React.JSX.Element => {
                   className="mb-5 mx-auto transition duration-300 hover:scale-105 hover:shadow-lg"
                 />
               )}
+
               <Link
                 href={`/blogs/${post.slug}`}
-                className="block text-xl font-semibold leading-[32px] px-4 py-2 text-black hover:text-[#DAA520] transition-colors"
+                className="break-words block text-left text-[25px] capitalize font-georgia text-black font-medium p-5 leading-[35px]"
               >
                 {post.title}
               </Link>

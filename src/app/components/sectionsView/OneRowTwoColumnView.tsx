@@ -41,7 +41,7 @@ const OneRowTwoColumnView = ({ content }: AddProps): React.JSX.Element => {
 
   return (
     <section className="bg-[#003a3a] max-w-[1370px] mx-auto w-full text-center p-5 px-1 md:px-16 pb-14 my-6">
-      <h2 className="text-white mt-5 text-2xl font-semibold">{contentData?.mainHeading}</h2>
+      <h2 className="text-white mt-5 ">{contentData?.mainHeading}</h2>
 
       <div className="flex flex-col md:flex-row gap-6 my-12">
         {[1, 2].map((col, index) => {
@@ -55,9 +55,11 @@ const OneRowTwoColumnView = ({ content }: AddProps): React.JSX.Element => {
               key={index}
               className="flex-1 border border-white p-6 bg-[#004949] rounded text-left text-white"
             >
-              <h3 className="text-xl font-semibold mb-4">{heading}</h3>
+              <h4 className="text-white text-left font-dm">
+                {heading}
+              </h4>
               <div
-                className="mb-6 text-base leading-relaxed"
+                className="mb-6 font-mono"
                 dangerouslySetInnerHTML={{ __html: description ?? '' }}
               />
               <Link href={buttonUrl || '#'}>

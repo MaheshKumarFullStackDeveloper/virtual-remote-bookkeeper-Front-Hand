@@ -27,7 +27,7 @@ export default function TopTextBottomContactFormView({ content }: AddProps): Rea
 
   return (
     <section className="my-5 md:my-8 lg:my-11 max-w-[1100px] w-full mx-auto px-5 text-center">
-      <h2 className="text-2xl font-semibold text-black">{contentData?.heading}</h2>
+      <h2 className=" text-black">{contentData?.heading}</h2>
       <div
         className="my-12 text-[#596475] leading-7"
         dangerouslySetInnerHTML={{ __html: contentData?.description ?? '' }}

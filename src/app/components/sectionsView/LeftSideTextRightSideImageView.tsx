@@ -46,11 +46,13 @@ export default function LeftSideTextRightSideImageView({ content }: AddProps): R
         </Head>
       )}
 
-      <h3 className="text-[22px] font-semibold text-left mb-4">{contentData?.heading}</h3>
 
+      <div className="my-5 md:my-8 lg:my-11 max-w-[1370px] w-full m-auto p-5">
+        <h3 >{contentData?.heading}</h3>
+      </div>
       <div className="flex flex-col md:flex-row items-start gap-6">
         <div
-          className="flex-1 text-[18px] text-[#596475] leading-[1.66em] pr-0 lg:pr-6"
+          className="flex-1 mt-1 lg:mt-16 text-[18px] font-mono text-[#596475] p-5 pr-8 leading-[1.66em] "
           dangerouslySetInnerHTML={{ __html: contentData?.description ?? '' }}
         />
 
