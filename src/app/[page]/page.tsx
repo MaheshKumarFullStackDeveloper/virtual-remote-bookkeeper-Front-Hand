@@ -1,7 +1,7 @@
 // app/[page]/page.tsx
 import { fetchData } from "../store/slice/dataSlice";
 import { store } from "../store/store";
-import CommonPageTemplate from "./CommonPageTemplate";
+import CommonPageTemplate from "../components/CommonPageTemplate";
 
 
 import type { Metadata } from "next";
