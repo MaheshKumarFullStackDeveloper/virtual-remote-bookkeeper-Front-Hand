@@ -52,6 +52,7 @@ function QuickContact() {
 
       reset();
     } catch (error) {
+      console.error(error);
       toast.error("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
