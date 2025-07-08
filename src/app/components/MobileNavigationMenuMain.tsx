@@ -14,11 +14,11 @@ import NavigationMenuMain from "./NavigationMenuMain"
 import { useAppSelector } from "../store/hooks/hooks"
 import { selectHeaderButton, selectHeaderLogo } from "../store/slice/dataSlice"
 
-export function MobileNavigationMenuMain() {
+export default function MobileNavigationMenuMain() {
   const HeaderLogo = useAppSelector(selectHeaderLogo);
   const HeaderButton = useAppSelector(selectHeaderButton);
-  return (
-    <Sheet  >
+  return (<>
+    <Sheet>
       <SheetTrigger asChild>
         <span className="mightytek-menu-box"> <span className="moblie-menu"><span className="hamburger"></span></span></span>
       </SheetTrigger>
@@ -44,5 +44,6 @@ export function MobileNavigationMenuMain() {
         </SheetFooter>
       </SheetContent>
     </Sheet>
+  </>
   )
 }
