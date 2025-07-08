@@ -3,8 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import NavigationMenuMain from "./NavigationMenuMain";
-import { MobileNavigationMenuMain } from "./MobileNavigationMenuMain";
+import dynamic from 'next/dynamic';
+const MobileNavigationMenuMain = dynamic(() => import('./MobileNavigationMenuMain'), {
+  loading: () => <p>Loading...</p>,
+});
+const NavigationMenuMain = dynamic(() => import('./NavigationMenuMain'), {
+  loading: () => <p>Loading...</p>,
+});
 import { useAppSelector } from "../store/hooks/hooks";
 import { selectHeaderButton, selectHeaderLogo } from "../store/slice/dataSlice";
 
