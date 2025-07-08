@@ -52,13 +52,8 @@ const LeftSideTextRightSideContactFormViewView = dynamic(() => import('./compone
 });
 
 
-type Props = {
-  params: Promise<{ page: string }>
-}
 
-export async function generateMetadata(
-  { params }: Props
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
 
 
 
