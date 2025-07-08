@@ -17,7 +17,7 @@ export async function generateMetadata(
   // read route params
   const newp = await params
 
-  console.log("check id", newp.page);
+  //console.log("check id", newp.page);
   if (newp.page !== "") {
 
     await store.dispatch(fetchData(newp.page));

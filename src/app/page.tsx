@@ -1,6 +1,9 @@
 import React from "react";
-import { Page, Sections } from "@/lib/types/types";
+import { Sections } from "@/lib/types/types";
 import dynamic from 'next/dynamic';
+import { fetchData } from "./store/slice/dataSlice";
+import { store } from "./store/store";
+import { Metadata } from "next";
 
 const MainLoader = dynamic(() => import('@/lib/MainLoader'), {
   loading: () => <p>Loading...</p>,
@@ -49,55 +52,37 @@ const LeftSideTextRightSideContactFormViewView = dynamic(() => import('./compone
 });
 
 
-
-const basenewUrl = process.env.NEXT_PUBLIC_API; // Load from .env 
-
-
-const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
-async function getPagedata(page: string) {
-  //console.log("home URl----", `${baseUrl}/pages?slug=${page}`);
-  try {
-    const response = await fetch(`${basenewUrl}/page/${page}`, {
-      headers: {
-        origin: homeUrl || "",
-        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=60',
-        'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
-      },
-    });
-
-    // Check if response is JSON before parsing
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      const data = await response.json();
-      const dataPage = data?.data;
-      if (dataPage?.sections?.length > 0) {
-        return dataPage;
-      } else {
-        return {
-          slug: page,
-          title: "Page not Found",
-        };
-      }
-    } else {
-      console.error("Invalid content type or non-JSON response:", await response.text());
-      return {
-        slug: page,
-        title: "Page not Found",
-      };
-    }
-
-  } catch (error) {
-    console.error("Failed to fetch metadata:", error);
-    return undefined;
-  }
+type Props = {
+  params: Promise<{ page: string }>
 }
+
+export async function generateMetadata(
+  { params }: Props
+): Promise<Metadata> {
+
+
+
+  await store.dispatch(fetchData('home'));
+  const state = store.getState().data;
+
+  // console.log("home page data on page", state.data);
+  return {
+    title: state.data?.metaTitle || process.env.SEO_TITLE,
+    description: state.data?.metaDescription || process.env.SEO_DES,
+  };
+
+
+}
+
 
 
 
 
 export default async function Home() {
 
-  const HomeContent = await getPagedata('home') as Page;
+  await store.dispatch(fetchData("home"));
+  const state = store.getState().data;
+  const HomeContent = state.data;
   const sections = HomeContent?.sections;
 
   if (!HomeContent || sections === undefined || sections === null) {

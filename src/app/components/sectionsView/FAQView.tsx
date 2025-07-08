@@ -46,7 +46,10 @@ const fetchFaqs = async (
       next: { revalidate: 60 }, // Safe for server if moved later
     }
   );
+  //console.log("Faqs cat", `${baseUrl}/faq/bycatslug?page=1&limit=${limit}&slug=${categorySlug}`)
+
   const response = await res.json();
+  // console.log("Faqs response", response)
   return { data: response?.data?.faqsList ?? [] };
 };
 
