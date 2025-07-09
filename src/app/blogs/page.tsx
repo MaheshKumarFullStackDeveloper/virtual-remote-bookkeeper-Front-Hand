@@ -17,6 +17,7 @@ interface PaginatedResponse {
   totalBlogsCount: number;
   totalBlogs: number;
 }
+export const runtime = 'edge';
 
 const fetchPosts = async (page: number, limit: number, catId?: string): Promise<PaginatedResponse> => {
   const params = new URLSearchParams({

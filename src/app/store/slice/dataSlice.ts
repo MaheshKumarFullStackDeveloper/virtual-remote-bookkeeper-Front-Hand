@@ -52,8 +52,10 @@ export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: str
     const response = await fetch(`${baseUrl}/page/${pageSlug}`, {
       headers: {
         origin: homeUrl ?? ""
-      }
+      },
+      cache: 'force-cache'
     });
+
     const data = await response.json();
     // console.log("page data slice", data);
     const dataPage = data?.data;

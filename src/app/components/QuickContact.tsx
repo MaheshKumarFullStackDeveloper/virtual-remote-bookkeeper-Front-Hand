@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast, Bounce } from "react-toastify";
 
+export const runtime = 'edge';
+
 interface QuickContactFormData {
   name: string;
   email: string;

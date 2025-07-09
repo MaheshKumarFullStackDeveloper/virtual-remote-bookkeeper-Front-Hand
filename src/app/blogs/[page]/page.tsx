@@ -17,7 +17,7 @@ async function getPagedata(page: string) {
     const res = await fetch(`${baseUrl}/blog/${page}`, {
       headers: {
         origin: homeUrl ?? ""
-      }
+      }, cache: 'force-cache',
     });
     const response = await res.json();
     // console.log("blog data", response)
