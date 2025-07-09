@@ -4,6 +4,8 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+export const runtime = 'edge';
+
 
 interface PaginatedResponse {
   data: Post[];

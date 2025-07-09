@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -41,6 +43,7 @@ const fetchPosts = async (limit?: number, categoryId?: string): Promise<Paginate
       'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=60',
       'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
     },
+    cache: 'force-cache',
     next: { revalidate: 60 }, // server cache intent
   });
 

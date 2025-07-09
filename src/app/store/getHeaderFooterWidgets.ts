@@ -1,5 +1,6 @@
 // getHeaderFooterWidgets.ts
 
+
 import { HeaderFooterData } from "@/lib/types/types";
 
 export async function getHeaderFooterWidgets() {

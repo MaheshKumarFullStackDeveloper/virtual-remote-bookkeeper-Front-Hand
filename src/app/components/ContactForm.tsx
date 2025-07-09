@@ -15,6 +15,8 @@ interface ContactFormData {
   message: string;
 }
 
+export const runtime = 'edge';
+
 export default function ContactForm(): React.JSX.Element {
   const [loading, setLoading] = useState(false);
 

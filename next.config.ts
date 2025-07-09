@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+const allowedOrigins: string = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -31,6 +33,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb', // or '500kb', '3mb', etc.
+      allowedOrigins: [allowedOrigins]
+    }
+  }
+
 };
 
 export default nextConfig;

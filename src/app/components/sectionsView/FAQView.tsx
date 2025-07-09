@@ -53,6 +53,8 @@ const fetchFaqs = async (
   return { data: response?.data?.faqsList ?? [] };
 };
 
+export const runtime = 'edge';
+
 export default function FAQView({ content }: AddProps): React.JSX.Element {
   const [contentData, setContentData] = useState<CONTENT | null>(null);
   const [faqs, setFaqsData] = useState<FAQ[] | null>(null);

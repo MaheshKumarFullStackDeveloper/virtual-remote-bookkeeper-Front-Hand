@@ -5,7 +5,6 @@ import { Metadata } from "next";
 import CommonPageTemplate from "./components/CommonPageTemplate";
 
 
-
 export async function generateMetadata(): Promise<Metadata> {
 
 
