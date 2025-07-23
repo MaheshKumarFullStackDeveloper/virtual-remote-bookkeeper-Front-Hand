@@ -89,6 +89,7 @@ export default function Footer(): React.JSX.Element {
       <div className="max-w-[1400px] mx-auto border-t border-[#0e1527] py-6 px-4 mt-12">
         <p className="text-sm text-left">{footerCopywrite}</p>
       </div>
+      <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/22315073.js"></script>
     </footer >
   );
 }
