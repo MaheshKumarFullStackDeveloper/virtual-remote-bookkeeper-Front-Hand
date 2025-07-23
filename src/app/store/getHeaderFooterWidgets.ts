@@ -13,7 +13,7 @@ export async function getHeaderFooterWidgets() {
             'CDN-Cache-Control': 'public, s-maxage=60',
             'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
         },
-        cache: 'no-store' // use 'force-cache' or 'revalidate' if needed
+        next: { revalidate: 60 },
     });
 
     const widgets = await res.json();
