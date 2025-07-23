@@ -60,7 +60,7 @@ export default async function RootLayout({
     <Suspense fallback={<MainLoader />}>
       <html lang="en" suppressHydrationWarning>
         <head>
-
+          <meta name="google-site-verification" content="oocaexQgETPQ-oFbkCOmrNIQiq9bJca_F8VTuNfGKJM" />
           {/* Google Tag (gtag.js) */}
           <Script
             src="https://www.googletagmanager.com/gtag/js?id=G-2S4N955CWB"
