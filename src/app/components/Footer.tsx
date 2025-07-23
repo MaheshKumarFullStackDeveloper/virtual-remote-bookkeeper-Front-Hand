@@ -2,7 +2,7 @@
 
 export const runtime = 'edge';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,6 +28,19 @@ export default function Footer(): React.JSX.Element {
 
   const shouldPreloadLogo = typeof footerLogo === 'string';
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.id = "hs-script-loader";
+      script.async = true;
+      script.defer = true;
+      script.src = "//js.hs-scripts.com/22315073.js";
+      document.body.appendChild(script);
+    }, 80000); // 60,000 ms = 60 seconds
+    console.log("Chat Script loaded:");
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <footer className="bg-black border-b text-white">
       {shouldPreloadLogo && (
@@ -89,7 +102,7 @@ export default function Footer(): React.JSX.Element {
       <div className="max-w-[1400px] mx-auto border-t border-[#0e1527] py-6 px-4 mt-12">
         <p className="text-sm text-left">{footerCopywrite}</p>
       </div>
-      <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/22315073.js"></script>
+
     </footer >
   );
 }
