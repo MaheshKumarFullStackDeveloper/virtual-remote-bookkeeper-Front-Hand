@@ -54,8 +54,8 @@ export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: str
       headers: {
         origin: homeUrl ?? ""
       },
-      /*  cache: 'force-cache' */
-      cache: 'no-store'
+      cache: 'force-cache'
+      /*   cache: 'no-store' */
     });
 
     const data = await response.json();
