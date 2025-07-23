@@ -4,12 +4,19 @@ import { store } from "./store/store";
 import { Metadata } from "next";
 import CommonPageTemplate from "./components/CommonPageTemplate";
 
+type Props = {
 
-export async function generateMetadata(): Promise<Metadata> {
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
+
+}
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+
+  const resolvedSearchParams = await searchParams;
+  const clearCache = resolvedSearchParams?.clearCache === "1" ? "1" : "0";
 
 
-
-  await store.dispatch(fetchData('home'));
+  await store.dispatch(fetchData({ pageSlug: 'home', clearCache }));
   const state = store.getState().data;
 
   // console.log("home page data on page", state.data);
@@ -27,7 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
 
-  await store.dispatch(fetchData("home"));
+  const clearCache = "0";
+  await store.dispatch(fetchData({ pageSlug: 'home', clearCache }));
   const state = store.getState().data;
 
 

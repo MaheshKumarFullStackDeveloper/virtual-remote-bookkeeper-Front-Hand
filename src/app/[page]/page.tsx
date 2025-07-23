@@ -8,19 +8,22 @@ import type { Metadata } from "next";
 
 
 type Props = {
-  params: Promise<{ page: string }>
+  params: Promise<{ page: string }>,
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
+
 }
 
-export async function generateMetadata(
-  { params }: Props
-): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   // read route params
   const newp = await params
+  const resolvedSearchParams = await searchParams;
+  const clearCache = resolvedSearchParams?.clearCache ?? "0";
 
-  //console.log("check id", newp.page);
+
+
   if (newp.page !== "") {
 
-    await store.dispatch(fetchData(newp.page));
+    await store.dispatch(fetchData({ pageSlug: newp.page, clearCache }));
     const state = store.getState().data;
 
     // console.log("page data on page", state.data);
@@ -42,7 +45,8 @@ export default async function Page(
 ) {
 
   const { page } = await params
-  await store.dispatch(fetchData(page));
+  const clearCache = "0";
+  await store.dispatch(fetchData({ pageSlug: page, clearCache }));
   const state = store.getState().data;
 
 

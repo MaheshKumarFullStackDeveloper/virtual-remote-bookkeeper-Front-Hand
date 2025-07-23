@@ -47,19 +47,27 @@ const baseUrl = process.env.NEXT_PUBLIC_API; // Load from .env
 const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
 
 
-export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: string) => {
+export const fetchData = createAsyncThunk('data/fetchData', async (payload: { pageSlug: string, clearCache: string }) => {
+  const { pageSlug, clearCache = "0" } = await payload;
+
   try {
 
-    const oneHour = 60 * 60 * 1000;
-    const hourKey = Math.floor(Date.now() / oneHour);
+
+
+    let cacheInterval = clearCache === "1" ? 1000 : 60 * 60 * 1000; // 1s or 1h
+    const hourKey = clearCache === "1"
+      ? Date.now() // Unique per request
+      : Math.floor(Date.now() / cacheInterval);
+
+    const cacheMode: RequestCache = clearCache === "1" ? "reload" : "force-cache";
 
     const response = await fetch(`${baseUrl}/page/${pageSlug}?v=${hourKey}`, {
       headers: {
-        origin: homeUrl ?? ""
+        origin: homeUrl ?? "",
       },
-      cache: 'force-cache'
-      /*   cache: 'no-store' */
+      cache: cacheMode,
     });
+
 
     const data = await response.json();
     // console.log("page data slice", data);

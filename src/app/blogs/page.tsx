@@ -63,7 +63,7 @@ const Page: React.FC = () => {
     const loadPosts = async () => {
       setIsLoading(true);
       setShowNotFound(false);
-      console.log("Loading posts for category:", catId, "Page:", page);
+      //  console.log("Loading posts for category:", catId, "Page:", page);
       const { data, totalBlogsCount } = await fetchPosts(page, limit, catId);
       setPosts(data);
       setTotal(totalBlogsCount);
