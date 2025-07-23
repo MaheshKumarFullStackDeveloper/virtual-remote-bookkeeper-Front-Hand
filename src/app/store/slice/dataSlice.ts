@@ -53,14 +53,15 @@ export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: str
       headers: {
         origin: homeUrl ?? ""
       },
-      cache: 'force-cache'
+      /*  cache: 'force-cache' */
+      cache: 'no-store'
     });
 
     const data = await response.json();
     // console.log("page data slice", data);
     const dataPage = data?.data;
 
-    if (dataPage.sections && dataPage?.sections?.length > 0 && dataPage.status === 'active') {
+    if (data.data && dataPage.sections && dataPage?.sections?.length > 0 && dataPage.status === 'active') {
       return dataPage;
     } else {
       const newArray = {

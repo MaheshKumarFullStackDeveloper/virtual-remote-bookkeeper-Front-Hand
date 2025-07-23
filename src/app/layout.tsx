@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import LayoutWrapper from "./LayoutWrapper";
 import MainLoader from "@/lib/MainLoader";
 import { getHeaderFooterWidgets } from "./store/getHeaderFooterWidgets";
-
+import Script from 'next/script';
 import "./globals.css";
 import "./style.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -59,6 +59,32 @@ export default async function RootLayout({
   return (
     <Suspense fallback={<MainLoader />}>
       <html lang="en" suppressHydrationWarning>
+        <head>
+
+          {/* Google Tag (gtag.js) */}
+          <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-2S4N955CWB"
+            strategy="afterInteractive"
+          />
+          <Script id="gtag-init" strategy="afterInteractive">
+            {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-2S4N955CWB');
+          `}
+          </Script>
+          {/* Google Tag Manager */}
+          <Script id="gtm-init" strategy="afterInteractive">
+            {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id=GTM-K5DQBPF6'+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-K5DQBPF6');
+          `}
+          </Script>
+        </head>
         <body
           className={`${roboto.className} ${poppins.className}  ${dmSans.className}`}
         >
