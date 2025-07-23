@@ -50,7 +50,7 @@ const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
 export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: string) => {
   try {
 
-    const response = await fetch(`${baseUrl}/page/${pageSlug}`, {
+    const response = await fetch(`${baseUrl}/page/${pageSlug}?t=${Date.now()}`, {
       headers: {
         origin: homeUrl ?? ""
       },
