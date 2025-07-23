@@ -39,7 +39,7 @@ export default function Footer(): React.JSX.Element {
       script.src = "//js.hs-scripts.com/22315073.js";
       document.body.appendChild(script);
       console.log("Chat Script loaded:");
-    }, 5000); // 5,000 ms = 5 seconds
+    }, 8000); // 5,000 ms = 5 seconds
 
     return () => clearTimeout(timer);
   }, []);
