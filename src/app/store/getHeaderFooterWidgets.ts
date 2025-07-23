@@ -4,16 +4,16 @@
 import { HeaderFooterData } from "@/lib/types/types";
 
 export async function getHeaderFooterWidgets() {
+    const oneHour = 60 * 60 * 1000;
+    const hourKey = Math.floor(Date.now() / oneHour);
 
     const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/widget/headerfooterdata`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/widget/headerfooterdata?v=${hourKey}`, {
         headers: {
             origin: homeUrl ?? "",
-            'Cache-Control': 'public, s-maxage=1',
-            'CDN-Cache-Control': 'public, s-maxage=60',
-            'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
+
         },
-        next: { revalidate: 60 },
+        cache: 'force-cache'
     });
 
     const widgets = await res.json();
