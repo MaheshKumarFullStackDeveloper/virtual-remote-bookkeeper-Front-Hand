@@ -107,350 +107,336 @@ const API_URLS = {
 const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
 export const api = createApi({
    baseQuery: async (args, api, extraOptions) => {
+      const baseQuery = fetchBaseQuery({
+         baseUrl: BASE_URL,
+         prepareHeaders: (headers) => {
 
-      const responseCache = new Map<string, { response: any; timestamp: number }>();
-      const CACHE_DURATION_MS = 1 * 60 * 60 * 1000; // 2 hours
-
-      const baseQueryWithCache = async (args: any, api: any, extraOptions: any) => {
-         const cacheKey = JSON.stringify(args);
-         const now = Date.now();
-
-         const cachedEntry = responseCache.get(cacheKey);
-         if (cachedEntry && now - cachedEntry.timestamp < CACHE_DURATION_MS) {
-            console.log("✅ Cache hit:", cacheKey);
-            return cachedEntry.response;
+            headers.set("origin", homeUrl ?? "");
+            return headers;
          }
+      });
 
-         const baseQuery = fetchBaseQuery({
-            baseUrl: BASE_URL,
-            prepareHeaders: (headers) => {
-
-               headers.set("origin", homeUrl ?? "");
-               return headers;
-            }
-         });
-
-         const result = await baseQuery(args, api, extraOptions);
+      const result = await baseQuery(args, api, extraOptions);
 
 
-         if (result.error?.status === 434) {
-            api.dispatch(logout()); // Dispatch logout action
-         }
+      if (result.error?.status === 434) {
+         api.dispatch(logout()); // Dispatch logout action
+      }
 
-         return result;
-      },
+      return result;
+   },
 
-         tagTypes: ['user', 'Address', 'Product', 'Image', 'Page', 'Section', 'Blog', 'Category', 'Faq', 'Faqcategory', 'Menu', 'Widget'],
-         endpoints: (builder) => ({
-            //User end pint
-            register: builder.mutation({
-               query: (userData) => ({
-                  url: API_URLS.REGISTER,
-                  method: "POST",
-                  body: userData
-               })
+   tagTypes: ['user', 'Address', 'Product', 'Image', 'Page', 'Section', 'Blog', 'Category', 'Faq', 'Faqcategory', 'Menu', 'Widget'],
+   endpoints: (builder) => ({
+      //User end pint
+      register: builder.mutation({
+         query: (userData) => ({
+            url: API_URLS.REGISTER,
+            method: "POST",
+            body: userData
+         })
+      }),
+      login: builder.mutation({
+         query: (userData) => ({
+            url: API_URLS.LOGIN,
+            method: "POST",
+            body: userData
+         })
+      }),
+      updateUser: builder.mutation({
+         query: (userData) => ({
+            url: API_URLS.UPDATE_USER_PROFILE,
+            method: "PUT",
+            body: userData
+         })
+      }),
+      updateUserPassword: builder.mutation({
+         query: (userData) => ({
+            url: API_URLS.UPDATE_USER_PASSWORD,
+            method: "PUT",
+            body: userData
+         })
+      }),
+      forgotPassword: builder.mutation({
+         query: (emial) => ({
+            url: API_URLS.FORGOT_PASSWORD,
+            method: "POST",
+            body: emial
+         })
+      }),
+      resetPassword: builder.mutation({
+         query: ({ token, newPassword }) => ({
+            url: API_URLS.RESET_PASSWORD(token),
+            method: "POST",
+            body: { newPassword: newPassword }
+         })
+      }),
+      verifyEmail: builder.mutation({
+         query: (token) => ({
+            url: API_URLS.VERIFY_EMAIL(token),
+            method: "GET"
+         })
+      }),
+      verifyAuth: builder.mutation({
+         query: () => ({
+            url: API_URLS.VERIFY_AUTH,
+            method: "GET"
+         })
+      }),
+      logOut: builder.mutation({
+         query: () => ({
+            url: API_URLS.LOGOUT,
+            method: "GET"
+         })
+      }),
+
+      //Images Endpoint Query
+      uploadImage: builder.mutation({
+         query: (imageData) => ({
+            url: API_URLS.IMAGE,
+            method: "POST",
+            body: imageData
          }),
-         login: builder.mutation({
-            query: (userData) => ({
-               url: API_URLS.LOGIN,
-               method: "POST",
-               body: userData
-            })
+         invalidatesTags: ["Image"]
+      }),
+      deleteImageById: builder.mutation({
+         query: (imageId) => ({
+            url: API_URLS.DELETE_IMAGE_BY_ID(imageId),
+            method: "DELETE"
          }),
-            updateUser: builder.mutation({
-               query: (userData) => ({
-                  url: API_URLS.UPDATE_USER_PROFILE,
-                  method: "PUT",
-                  body: userData
-               })
-            }),
-               updateUserPassword: builder.mutation({
-                  query: (userData) => ({
-                     url: API_URLS.UPDATE_USER_PASSWORD,
-                     method: "PUT",
-                     body: userData
-                  })
-               }),
-                  forgotPassword: builder.mutation({
-                     query: (emial) => ({
-                        url: API_URLS.FORGOT_PASSWORD,
-                        method: "POST",
-                        body: emial
-                     })
-                  }),
-                     resetPassword: builder.mutation({
-                        query: ({ token, newPassword }) => ({
-                           url: API_URLS.RESET_PASSWORD(token),
-                           method: "POST",
-                           body: { newPassword: newPassword }
-                        })
-                     }),
-                        verifyEmail: builder.mutation({
-                           query: (token) => ({
-                              url: API_URLS.VERIFY_EMAIL(token),
-                              method: "GET"
-                           })
-                        }),
-                           verifyAuth: builder.mutation({
-                              query: () => ({
-                                 url: API_URLS.VERIFY_AUTH,
-                                 method: "GET"
-                              })
-                           }),
-                              logOut: builder.mutation({
-                                 query: () => ({
-                                    url: API_URLS.LOGOUT,
-                                    method: "GET"
-                                 })
-                              }),
-
-                                 //Images Endpoint Query
-                                 uploadImage: builder.mutation({
-                                    query: (imageData) => ({
-                                       url: API_URLS.IMAGE,
-                                       method: "POST",
-                                       body: imageData
-                                    }),
-                                    invalidatesTags: ["Image"]
-                                 }),
-                                    deleteImageById: builder.mutation({
-                                       query: (imageId) => ({
-                                          url: API_URLS.DELETE_IMAGE_BY_ID(imageId),
-                                          method: "DELETE"
-                                       }),
-                                       invalidatesTags: ["Image"]
-                                    }),
-                                       getImages: builder.query({
-                                          query: ({ page, limit }) => API_URLS.GET_IMAGE({ page, limit }),
-                                          providesTags: ["Image"]
-                                       }),
-                                          getImageByUserId: builder.query({
-                                             query: (userId) => API_URLS.GET_IMAGE_BY_USER_ID(userId),
-                                             providesTags: ["Image"]
-                                          }),
+         invalidatesTags: ["Image"]
+      }),
+      getImages: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_IMAGE({ page, limit }),
+         providesTags: ["Image"]
+      }),
+      getImageByUserId: builder.query({
+         query: (userId) => API_URLS.GET_IMAGE_BY_USER_ID(userId),
+         providesTags: ["Image"]
+      }),
 
 
-                                             //Widget Endpoint Query
-                                             uploadWidget: builder.mutation({
-                                                query: (imageData) => ({
-                                                   url: API_URLS.WIDGET,
-                                                   method: "POST",
-                                                   body: imageData
-                                                }),
-                                                invalidatesTags: ["Widget"]
-                                             }),
-                                                deleteWidgetById: builder.mutation({
-                                                   query: (widgetId) => ({
-                                                      url: API_URLS.DELETE_WIDGET_BY_ID(widgetId),
-                                                      method: "DELETE"
-                                                   }),
-                                                   invalidatesTags: ["Widget"]
-                                                }),
-                                                   getWidgets: builder.query({
-                                                      query: ({ page, limit }) => API_URLS.GET_WIDGETS({ page, limit }),
-                                                      providesTags: ["Widget"]
-                                                   }),
+      //Widget Endpoint Query
+      uploadWidget: builder.mutation({
+         query: (imageData) => ({
+            url: API_URLS.WIDGET,
+            method: "POST",
+            body: imageData
+         }),
+         invalidatesTags: ["Widget"]
+      }),
+      deleteWidgetById: builder.mutation({
+         query: (widgetId) => ({
+            url: API_URLS.DELETE_WIDGET_BY_ID(widgetId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Widget"]
+      }),
+      getWidgets: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_WIDGETS({ page, limit }),
+         providesTags: ["Widget"]
+      }),
 
 
 
-                                                      //blogs Endpoint Query
-                                                      addUpadateBlog: builder.mutation({
-                                                         query: (blogData) => ({
-                                                            url: API_URLS.BLOG,
-                                                            method: "POST",
-                                                            body: blogData
-                                                         }),
-                                                         invalidatesTags: ["Blog"]
-                                                      }),
-                                                         deleteBlogById: builder.mutation({
-                                                            query: (blogId) => ({
-                                                               url: API_URLS.DELETE_BLOG_BY_ID(blogId),
-                                                               method: "DELETE"
-                                                            }),
-                                                            invalidatesTags: ["Blog"]
-                                                         }),
-                                                            getBlogs: builder.query({
-                                                               query: ({ page, limit, search }) =>
-                                                                  API_URLS.GET_BLOGS({ page, limit, search }),
-                                                               providesTags: ["Blog"],
-                                                            }),
+      //blogs Endpoint Query
+      addUpadateBlog: builder.mutation({
+         query: (blogData) => ({
+            url: API_URLS.BLOG,
+            method: "POST",
+            body: blogData
+         }),
+         invalidatesTags: ["Blog"]
+      }),
+      deleteBlogById: builder.mutation({
+         query: (blogId) => ({
+            url: API_URLS.DELETE_BLOG_BY_ID(blogId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Blog"]
+      }),
+      getBlogs: builder.query({
+         query: ({ page, limit, search }) =>
+            API_URLS.GET_BLOGS({ page, limit, search }),
+         providesTags: ["Blog"],
+      }),
 
-                                                               getBlogBySlug: builder.query({
-                                                                  query: (slug) => API_URLS.GET_BLOG_BY_SLUG(slug),
-                                                                  providesTags: ["Blog"]
-                                                               }),
-
-
-                                                                  //Category Endpoint Query
-                                                                  addUpadateCategory: builder.mutation({
-                                                                     query: (categoryData) => ({
-                                                                        url: API_URLS.CATEGORY,
-                                                                        method: "POST",
-                                                                        body: categoryData
-                                                                     }),
-                                                                     invalidatesTags: ["Category"]
-                                                                  }),
-                                                                     deleteCategoryById: builder.mutation({
-                                                                        query: (categoryId) => ({
-                                                                           url: API_URLS.DELETE_CATEGORY_BY_ID(categoryId),
-                                                                           method: "DELETE"
-                                                                        }),
-                                                                        invalidatesTags: ["Category"]
-                                                                     }),
-                                                                        getCategorys: builder.query({
-                                                                           query: ({ page, limit }) => API_URLS.GET_CATEGORYS({ page, limit }),
-                                                                           providesTags: ["Category"]
-                                                                        }),
-                                                                           getCategoryBySlug: builder.query({
-                                                                              query: (slug) => API_URLS.GET_CATEGORY_BY_SLUG(slug),
-                                                                              providesTags: ["Category"]
-                                                                           }),
+      getBlogBySlug: builder.query({
+         query: (slug) => API_URLS.GET_BLOG_BY_SLUG(slug),
+         providesTags: ["Blog"]
+      }),
 
 
-                                                                              //Faq Endpoint Query
-                                                                              addUpadatefaq: builder.mutation({
-                                                                                 query: (faqData) => ({
-                                                                                    url: API_URLS.FAQ,
-                                                                                    method: "POST",
-                                                                                    body: faqData
-                                                                                 }),
-                                                                                 invalidatesTags: ["Faq"]
-                                                                              }),
-                                                                                 deleteFaqById: builder.mutation({
-                                                                                    query: (faqId) => ({
-                                                                                       url: API_URLS.DELETE_FAQ_BY_ID(faqId),
-                                                                                       method: "DELETE"
-                                                                                    }),
-                                                                                    invalidatesTags: ["Faq"]
-                                                                                 }),
-
-                                                                                    getFAQs: builder.query({
-                                                                                       query: ({ page, limit, search }) =>
-                                                                                          API_URLS.GET_FAQS({ page, limit, search }),
-                                                                                       providesTags: ["Faq"],
-                                                                                    }),
-                                                                                       getFaqById: builder.query({
-                                                                                          query: (id) => API_URLS.GET_FAQ_BY_ID(id),
-                                                                                          providesTags: ["Faq"]
-                                                                                       }),
+      //Category Endpoint Query
+      addUpadateCategory: builder.mutation({
+         query: (categoryData) => ({
+            url: API_URLS.CATEGORY,
+            method: "POST",
+            body: categoryData
+         }),
+         invalidatesTags: ["Category"]
+      }),
+      deleteCategoryById: builder.mutation({
+         query: (categoryId) => ({
+            url: API_URLS.DELETE_CATEGORY_BY_ID(categoryId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Category"]
+      }),
+      getCategorys: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_CATEGORYS({ page, limit }),
+         providesTags: ["Category"]
+      }),
+      getCategoryBySlug: builder.query({
+         query: (slug) => API_URLS.GET_CATEGORY_BY_SLUG(slug),
+         providesTags: ["Category"]
+      }),
 
 
-                                                                                          //Faq Category Endpoint Query
-                                                                                          addUpadateFaqcategory: builder.mutation({
-                                                                                             query: (categoryData) => ({
-                                                                                                url: API_URLS.FAQCATEGORY,
-                                                                                                method: "POST",
-                                                                                                body: categoryData
-                                                                                             }),
-                                                                                             invalidatesTags: ["Faqcategory"]
-                                                                                          }),
-                                                                                             deleteFaqcategoryById: builder.mutation({
-                                                                                                query: (categoryId) => ({
-                                                                                                   url: API_URLS.DELETE_FAQCATEGORY_BY_ID(categoryId),
-                                                                                                   method: "DELETE"
-                                                                                                }),
-                                                                                                invalidatesTags: ["Faqcategory"]
-                                                                                             }),
-                                                                                                getFaqcategorys: builder.query({
-                                                                                                   query: ({ page, limit }) => API_URLS.GET_FAQCATEGORYS({ page, limit }),
-                                                                                                   providesTags: ["Faqcategory"]
-                                                                                                }),
-                                                                                                   getFaqcategoryBySlug: builder.query({
-                                                                                                      query: (slug) => API_URLS.GET_FAQCATEGORY_BY_SLUG(slug),
-                                                                                                      providesTags: ["Faqcategory"]
-                                                                                                   }),
+      //Faq Endpoint Query
+      addUpadatefaq: builder.mutation({
+         query: (faqData) => ({
+            url: API_URLS.FAQ,
+            method: "POST",
+            body: faqData
+         }),
+         invalidatesTags: ["Faq"]
+      }),
+      deleteFaqById: builder.mutation({
+         query: (faqId) => ({
+            url: API_URLS.DELETE_FAQ_BY_ID(faqId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Faq"]
+      }),
+
+      getFAQs: builder.query({
+         query: ({ page, limit, search }) =>
+            API_URLS.GET_FAQS({ page, limit, search }),
+         providesTags: ["Faq"],
+      }),
+      getFaqById: builder.query({
+         query: (id) => API_URLS.GET_FAQ_BY_ID(id),
+         providesTags: ["Faq"]
+      }),
 
 
-
-                                                                                                      //Navigation Endpoint Query
-                                                                                                      addUpadateMenu: builder.mutation({
-                                                                                                         query: (menuData) => ({
-                                                                                                            url: API_URLS.MENU,
-                                                                                                            method: "POST",
-                                                                                                            body: menuData
-                                                                                                         }),
-                                                                                                         invalidatesTags: ["Menu"]
-                                                                                                      }),
-                                                                                                         deleteMenuById: builder.mutation({
-                                                                                                            query: (menuId) => ({
-                                                                                                               url: API_URLS.DELETE_MENU_BY_ID(menuId),
-                                                                                                               method: "DELETE"
-                                                                                                            }),
-                                                                                                            invalidatesTags: ["Menu"]
-                                                                                                         }),
-                                                                                                            getMenus: builder.query({
-                                                                                                               query: ({ page, limit }) => API_URLS.GET_MENU({ page, limit }),
-                                                                                                               providesTags: ["Menu"]
-                                                                                                            }),
-                                                                                                               addUpadateItem: builder.mutation({
-                                                                                                                  query: (itemData) => ({
-                                                                                                                     url: API_URLS.ITEM,
-                                                                                                                     method: "POST",
-                                                                                                                     body: itemData
-                                                                                                                  }),
-                                                                                                                  invalidatesTags: ["Menu"]
-                                                                                                               }),
-                                                                                                                  deleteItemById: builder.mutation({
-                                                                                                                     query: (itemId) => ({
-                                                                                                                        url: API_URLS.DELETE_ITEM_BY_ID(itemId),
-                                                                                                                        method: "DELETE"
-                                                                                                                     }),
-                                                                                                                     invalidatesTags: ["Menu"]
-                                                                                                                  }),
-                                                                                                                     getAllMenusAndAllItems: builder.query({
-                                                                                                                        query: () => API_URLS.ALLMENUITEM,
-                                                                                                                        providesTags: ["Menu"]
-                                                                                                                     }),
+      //Faq Category Endpoint Query
+      addUpadateFaqcategory: builder.mutation({
+         query: (categoryData) => ({
+            url: API_URLS.FAQCATEGORY,
+            method: "POST",
+            body: categoryData
+         }),
+         invalidatesTags: ["Faqcategory"]
+      }),
+      deleteFaqcategoryById: builder.mutation({
+         query: (categoryId) => ({
+            url: API_URLS.DELETE_FAQCATEGORY_BY_ID(categoryId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Faqcategory"]
+      }),
+      getFaqcategorys: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_FAQCATEGORYS({ page, limit }),
+         providesTags: ["Faqcategory"]
+      }),
+      getFaqcategoryBySlug: builder.query({
+         query: (slug) => API_URLS.GET_FAQCATEGORY_BY_SLUG(slug),
+         providesTags: ["Faqcategory"]
+      }),
 
 
 
-                                                                                                                        //Pages Endpoint Query
-                                                                                                                        addUpadatePage: builder.mutation({
-                                                                                                                           query: (pageData) => ({
-                                                                                                                              url: API_URLS.PAGE,
-                                                                                                                              method: "POST",
-                                                                                                                              body: pageData
-                                                                                                                           }),
-                                                                                                                           invalidatesTags: ["Page"]
-                                                                                                                        }),
-                                                                                                                           deletePageById: builder.mutation({
-                                                                                                                              query: (pageId) => ({
-                                                                                                                                 url: API_URLS.DELETE_PAGES_BY_ID(pageId),
-                                                                                                                                 method: "DELETE"
-                                                                                                                              }),
-                                                                                                                              invalidatesTags: ["Page"]
-                                                                                                                           }),
-                                                                                                                              getPages: builder.query({
-                                                                                                                                 query: ({ page, limit, search }) => API_URLS.GET_PAGES({ page, limit, search }),
-                                                                                                                                 providesTags: ["Page"]
-                                                                                                                              }),
-                                                                                                                                 getPageBySlug: builder.query({
-                                                                                                                                    query: (slug) => API_URLS.GET_PAGE_BY_SLUG(slug),
-                                                                                                                                    providesTags: ["Page"]
-                                                                                                                                 }),
+      //Navigation Endpoint Query
+      addUpadateMenu: builder.mutation({
+         query: (menuData) => ({
+            url: API_URLS.MENU,
+            method: "POST",
+            body: menuData
+         }),
+         invalidatesTags: ["Menu"]
+      }),
+      deleteMenuById: builder.mutation({
+         query: (menuId) => ({
+            url: API_URLS.DELETE_MENU_BY_ID(menuId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Menu"]
+      }),
+      getMenus: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_MENU({ page, limit }),
+         providesTags: ["Menu"]
+      }),
+      addUpadateItem: builder.mutation({
+         query: (itemData) => ({
+            url: API_URLS.ITEM,
+            method: "POST",
+            body: itemData
+         }),
+         invalidatesTags: ["Menu"]
+      }),
+      deleteItemById: builder.mutation({
+         query: (itemId) => ({
+            url: API_URLS.DELETE_ITEM_BY_ID(itemId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Menu"]
+      }),
+      getAllMenusAndAllItems: builder.query({
+         query: () => API_URLS.ALLMENUITEM,
+         providesTags: ["Menu"]
+      }),
 
 
 
-                                                                                                                                    //Section Endpoint Query
-                                                                                                                                    addUpadateSection: builder.mutation({
-                                                                                                                                       query: (sectionData) => ({
-                                                                                                                                          url: API_URLS.SECTION,
-                                                                                                                                          method: "POST",
-                                                                                                                                          body: sectionData
-                                                                                                                                       }),
-                                                                                                                                       invalidatesTags: ["Section"]
-                                                                                                                                    }),
-                                                                                                                                       deleteSectionById: builder.mutation({
-                                                                                                                                          query: (sectionId) => ({
-                                                                                                                                             url: API_URLS.DELETE_SECTION_BY_ID(sectionId),
-                                                                                                                                             method: "DELETE"
-                                                                                                                                          }),
-                                                                                                                                          invalidatesTags: ["Section"]
-                                                                                                                                       }),
-                                                                                                                                          getSectionsByPageId: builder.query({
-                                                                                                                                             query: ({ pageId }) => API_URLS.GET_SECTIONS_BY_PAGE_ID(pageId),
-                                                                                                                                             providesTags: ["Section"]
-                                                                                                                                          }),
+      //Pages Endpoint Query
+      addUpadatePage: builder.mutation({
+         query: (pageData) => ({
+            url: API_URLS.PAGE,
+            method: "POST",
+            body: pageData
+         }),
+         invalidatesTags: ["Page"]
+      }),
+      deletePageById: builder.mutation({
+         query: (pageId) => ({
+            url: API_URLS.DELETE_PAGES_BY_ID(pageId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Page"]
+      }),
+      getPages: builder.query({
+         query: ({ page, limit, search }) => API_URLS.GET_PAGES({ page, limit, search }),
+         providesTags: ["Page"]
+      }),
+      getPageBySlug: builder.query({
+         query: (slug) => API_URLS.GET_PAGE_BY_SLUG(slug),
+         providesTags: ["Page"]
+      }),
+
+
+
+      //Section Endpoint Query
+      addUpadateSection: builder.mutation({
+         query: (sectionData) => ({
+            url: API_URLS.SECTION,
+            method: "POST",
+            body: sectionData
+         }),
+         invalidatesTags: ["Section"]
+      }),
+      deleteSectionById: builder.mutation({
+         query: (sectionId) => ({
+            url: API_URLS.DELETE_SECTION_BY_ID(sectionId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Section"]
+      }),
+      getSectionsByPageId: builder.query({
+         query: ({ pageId }) => API_URLS.GET_SECTIONS_BY_PAGE_ID(pageId),
+         providesTags: ["Section"]
+      }),
 
 
 
