@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchData } from "./store/slice/dataSlice";
+import { fetchData, fetchDataWithoutCache } from "./store/slice/dataSlice";
 import { store } from "./store/store";
 import { Metadata } from "next";
 import CommonPageTemplate from "./components/CommonPageTemplate";
@@ -14,9 +14,12 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
   const resolvedSearchParams = await searchParams;
   const clearCache = resolvedSearchParams?.clearCache === "1" ? "1" : "0";
+  if (clearCache === "1") {
+    await store.dispatch(fetchDataWithoutCache('home'));
+  } else {
+    await store.dispatch(fetchData('home'));
+  }
 
-
-  await store.dispatch(fetchData({ pageSlug: 'home', clearCache }));
   const state = store.getState().data;
 
   // console.log("home page data on page", state.data);
@@ -32,10 +35,17 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
 
 
-export default async function Home() {
+export default async function Home({ searchParams }: Props) {
 
-  const clearCache = "0";
-  await store.dispatch(fetchData({ pageSlug: 'home', clearCache }));
+  const resolvedSearchParams = await searchParams;
+  const clearCache = resolvedSearchParams?.clearCache ?? "0";
+
+  if (clearCache === "1") {
+    await store.dispatch(fetchDataWithoutCache('home'));
+  } else {
+    await store.dispatch(fetchData('home'));
+  }
+
   const state = store.getState().data;
 
 

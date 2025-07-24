@@ -1,5 +1,5 @@
 // app/[page]/page.tsx
-import { fetchData } from "../store/slice/dataSlice";
+import { fetchData, fetchDataWithoutCache } from "../store/slice/dataSlice";
 import { store } from "../store/store";
 import CommonPageTemplate from "../components/CommonPageTemplate";
 
@@ -23,7 +23,12 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 
   if (newp.page !== "") {
 
-    await store.dispatch(fetchData({ pageSlug: newp.page, clearCache }));
+    if (clearCache === "1") {
+      await store.dispatch(fetchDataWithoutCache(newp.page));
+    } else {
+      await store.dispatch(fetchData(newp.page));
+    }
+
     const state = store.getState().data;
 
     // console.log("page data on page", state.data);
@@ -41,12 +46,19 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 }
 
 export default async function Page(
-  { params }: Props
+  { params, searchParams }: Props
 ) {
 
-  const { page } = await params
-  const clearCache = "0";
-  await store.dispatch(fetchData({ pageSlug: page, clearCache }));
+  const newp = await params
+  const resolvedSearchParams = await searchParams;
+  const clearCache = resolvedSearchParams?.clearCache ?? "0";
+
+  if (clearCache === "1") {
+    await store.dispatch(fetchDataWithoutCache(newp.page));
+  } else {
+    await store.dispatch(fetchData(newp.page));
+  }
+
   const state = store.getState().data;
 
 

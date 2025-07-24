@@ -4,7 +4,7 @@
 import { HeaderFooterData } from "@/lib/types/types";
 
 export async function getHeaderFooterWidgets() {
-    const oneHour = 60 * 60 * 1000;
+    const oneHour = 60 * 60 * 2000;
     const hourKey = Math.floor(Date.now() / oneHour);
 
     const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
