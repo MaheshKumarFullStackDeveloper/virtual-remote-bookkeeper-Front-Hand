@@ -4,11 +4,11 @@
 import { HeaderFooterData } from "@/lib/types/types";
 
 export async function getHeaderFooterWidgets() {
-    const oneHour = 60 * 60 * 4000;
-    const hourKey = Math.floor(Date.now() / oneHour);
-
+    /*    const oneHour = 60 * 60 * 4000;
+       const hourKey = Math.floor(Date.now() / oneHour);
+    */
     const homeUrl = process.env.NEXT_PUBLIC_BASE_PATH; // Load from .env
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/widget/headerfooterdata?v=${hourKey}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/widget/headerfooterdata`, {
         headers: {
             origin: homeUrl ?? "",
 

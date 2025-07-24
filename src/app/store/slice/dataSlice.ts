@@ -94,9 +94,9 @@ export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: str
   try {
 
 
-    const oneHour = 60 * 60 * 4000;
-    const hourKey = Math.floor(Date.now() / oneHour);
-    const response = await fetch(`${baseUrl}/page/${pageSlug}?v=${hourKey}`, {
+    /*    const oneHour = 60 * 60 * 4000;
+       const hourKey = Math.floor(Date.now() / oneHour); */
+    const response = await fetch(`${baseUrl}/page/${pageSlug}`, {
       headers: {
         origin: homeUrl ?? "",
       },
