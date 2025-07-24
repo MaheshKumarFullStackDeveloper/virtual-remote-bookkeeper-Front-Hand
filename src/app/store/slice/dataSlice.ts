@@ -59,7 +59,7 @@ export const fetchData = createAsyncThunk('data/fetchData', async (payload: { pa
       ? Date.now() // Unique per request
       : Math.floor(Date.now() / cacheInterval);
 
-    const cacheMode: RequestCache = clearCache === "1" ? "reload" : "force-cache";
+    const cacheMode: RequestCache = clearCache === "1" ? "no-cache" : "force-cache";
 
     const response = await fetch(`${baseUrl}/page/${pageSlug}?v=${hourKey}`, {
       headers: {
@@ -70,7 +70,7 @@ export const fetchData = createAsyncThunk('data/fetchData', async (payload: { pa
 
 
     const data = await response.json();
-    // console.log("page data slice", data);
+    console.log(`${baseUrl}/page/${pageSlug}?v=${hourKey}`, cacheMode);
     const dataPage = data?.data;
 
     if (data.data && dataPage.sections && dataPage?.sections?.length > 0 && dataPage.status === 'active') {
