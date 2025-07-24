@@ -100,7 +100,11 @@ export const fetchData = createAsyncThunk('data/fetchData', async (pageSlug: str
       headers: {
         origin: homeUrl ?? "",
       },
-      cache: 'force-cache'
+      cache: 'force-cache',
+      next: {
+        revalidate: 14400 // seconds (4 hours)
+      }
+
     });
 
 

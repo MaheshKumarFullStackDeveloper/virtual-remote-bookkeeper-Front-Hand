@@ -13,7 +13,10 @@ export async function getHeaderFooterWidgets() {
             origin: homeUrl ?? "",
 
         },
-        cache: 'force-cache'
+        cache: 'force-cache',
+        next: {
+            revalidate: 14400 // seconds (4 hours)
+        }
     });
 
     const widgets = await res.json();
