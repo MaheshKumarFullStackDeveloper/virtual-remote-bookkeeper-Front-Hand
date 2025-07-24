@@ -13,48 +13,45 @@ import {
   setHeaderButton,
   setBlogCategories,
 } from "./store/slice/dataSlice";
-import { HeaderFooterData } from "@/lib/types/types";
+import { getHeaderFooterWidgets, getHeaderFooterWidgetsWithoutCache } from "./store/getHeaderFooterWidgets";
 
-
-
-function InnerLayout({
-  children,
-  initialHeaderFooter,
-}: {
-  children: React.ReactNode;
-  initialHeaderFooter: HeaderFooterData;
-}) {
+function InnerLayout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (initialHeaderFooter) {
-      //  console.log("initial Header Footer", initialHeaderFooter)
+    async function fetchHeaderFooter() {
+      const searchParams = new URLSearchParams(window.location.search);
+      const clearCache = searchParams.get("clearCache");
+      let initialHeaderFooter;
+      if (clearCache === "1") {
+        initialHeaderFooter = await getHeaderFooterWidgetsWithoutCache();
+      } else {
+        initialHeaderFooter = await getHeaderFooterWidgets();
+      }
 
-      dispatch(setHeaderLogo(initialHeaderFooter.headerLogo ?? ""));
-      dispatch(setFooterLogo(initialHeaderFooter.footerLogo ?? ""));
-      dispatch(setFooterText(initialHeaderFooter.footerText ?? ""));
-      dispatch(setFooterMenu(initialHeaderFooter.footerMenu));
-      dispatch(setHeaderMenu(initialHeaderFooter.headerMenu));
-      dispatch(setHeaderButton(initialHeaderFooter.headerButton));
-      dispatch(setfooterCopywrite(initialHeaderFooter.footerCopywrite ?? ""));
-      dispatch(setBlogCategories(initialHeaderFooter.blogCategories));
+
+      if (initialHeaderFooter) {
+        dispatch(setHeaderLogo(initialHeaderFooter.headerLogo ?? ""));
+        dispatch(setFooterLogo(initialHeaderFooter.footerLogo ?? ""));
+        dispatch(setFooterText(initialHeaderFooter.footerText ?? ""));
+        dispatch(setFooterMenu(initialHeaderFooter.footerMenu));
+        dispatch(setHeaderMenu(initialHeaderFooter.headerMenu));
+        dispatch(setHeaderButton(initialHeaderFooter.headerButton));
+        dispatch(setfooterCopywrite(initialHeaderFooter.footerCopywrite ?? ""));
+        dispatch(setBlogCategories(initialHeaderFooter.blogCategories));
+      }
     }
-  }, [initialHeaderFooter, dispatch]);
+
+    fetchHeaderFooter();
+  }, [dispatch]);
 
   return <>{children}</>;
 }
 
-
-export default function LayoutWrapper({
-  children,
-  initialHeaderFooter,
-}: {
-  children: React.ReactNode;
-  initialHeaderFooter: HeaderFooterData;
-}) {
+export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-      <InnerLayout initialHeaderFooter={initialHeaderFooter}>
+      <InnerLayout>
         {children}
       </InnerLayout>
     </Provider>

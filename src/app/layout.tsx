@@ -8,7 +8,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import LayoutWrapper from "./LayoutWrapper";
 import MainLoader from "@/lib/MainLoader";
-import { getHeaderFooterWidgets } from "./store/getHeaderFooterWidgets";
 import Script from 'next/script';
 import "./globals.css";
 import "./style.css";
@@ -43,18 +42,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const headerFooter = await getHeaderFooterWidgets();
 
-  const sanitizedHeaderFooter = {
-    headerLogo: headerFooter.headerLogo ?? "",
-    footerLogo: headerFooter.footerLogo ?? "",
-    footerText: headerFooter.footerText ?? "",
-    footerCopywrite: headerFooter.footerCopywrite ?? "",
-    headerMenu: headerFooter.headerMenu ?? [],
-    footerMenu: headerFooter.footerMenu ?? [],
-    headerButton: headerFooter.headerButton ?? null,
-    blogCategories: headerFooter.blogCategories ?? null,
-  };
+
 
   return (
     <Suspense fallback={<MainLoader />}>
@@ -88,7 +77,7 @@ export default async function RootLayout({
         <body
           className={`${roboto.className} ${poppins.className}  ${dmSans.className}`}
         >
-          <LayoutWrapper initialHeaderFooter={sanitizedHeaderFooter}>
+          <LayoutWrapper >
             <Header />
             {children}
             <Footer />
