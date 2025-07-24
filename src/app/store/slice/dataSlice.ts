@@ -51,26 +51,33 @@ export const fetchData = createAsyncThunk('data/fetchData', async (payload: { pa
   const { pageSlug, clearCache = "0" } = await payload;
 
   try {
+    let data = null
+    if (clearCache === "1") {
 
+      const response = await fetch(`${baseUrl}/page/${pageSlug}?v=${Date.now()}`, {
+        headers: {
+          origin: homeUrl ?? "",
+        },
+        cache: "no-cache",
+      });
 
+      console.log("fetching data with clear cache", `${baseUrl}/page/${pageSlug}?v=${Date.now()}`);
+      data = await response.json();
+    } else {
+      let cacheInterval = 60 * 60 * 6000; // 1h
+      const hourKey = Math.floor(Date.now() / cacheInterval);
 
-    let cacheInterval = clearCache === "1" ? 1000 : 60 * 60 * 1000; // 1s or 1h
-    const hourKey = clearCache === "1"
-      ? Date.now() // Unique per request
-      : Math.floor(Date.now() / cacheInterval);
+      const response = await fetch(`${baseUrl}/page/${pageSlug}?v=${hourKey}`, {
+        headers: {
+          origin: homeUrl ?? "",
+        },
+        cache: "force-cache",
+      });
 
-    const cacheMode: RequestCache = clearCache === "1" ? "no-cache" : "force-cache";
+      console.log("fetching data with cache", `${baseUrl}/page/${pageSlug}?v=${hourKey}`);
+      data = await response.json();
+    }
 
-    const response = await fetch(`${baseUrl}/page/${pageSlug}?v=${hourKey}`, {
-      headers: {
-        origin: homeUrl ?? "",
-      },
-      cache: cacheMode,
-    });
-
-
-    const data = await response.json();
-    console.log(`${baseUrl}/page/${pageSlug}?v=${hourKey}`, cacheMode);
     const dataPage = data?.data;
 
     if (data.data && dataPage.sections && dataPage?.sections?.length > 0 && dataPage.status === 'active') {
