@@ -84,7 +84,17 @@ const Page: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const isImageFormat = (url?: string) => url && /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(url);
+  const isImageFormat = (url?: string): boolean => {
+    if (!url) return false;
+
+    try {
+      const parsedUrl = new URL(url); // Throws if invalid URL
+      const isValidFormat = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(parsedUrl.pathname);
+      return isValidFormat;
+    } catch {
+      return false;
+    }
+  };
 
   return (
     <div className="max-w-[1370px] w-full m-auto mb-24 text-center">

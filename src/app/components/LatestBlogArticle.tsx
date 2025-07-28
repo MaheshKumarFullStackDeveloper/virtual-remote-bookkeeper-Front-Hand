@@ -27,8 +27,17 @@ interface Blog {
   categorySlug: string;
 }
 
-const isImageFormat = (url?: string): boolean =>
-  !!url && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
+const isImageFormat = (url?: string): boolean => {
+  if (!url) return false;
+
+  try {
+    const parsedUrl = new URL(url); // Throws if invalid URL
+    const isValidFormat = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(parsedUrl.pathname);
+    return isValidFormat;
+  } catch {
+    return false;
+  }
+};
 
 const fetchPosts = async (limit?: number, categoryId?: string): Promise<PaginatedResponse> => {
   const params = new URLSearchParams({
@@ -37,11 +46,11 @@ const fetchPosts = async (limit?: number, categoryId?: string): Promise<Paginate
     ...(categoryId && categoryId !== '' && { categoryId }),
   });
 
-  const res = await fetch(`${baseUrl}/blog?${params.toString()}`, {
+  const oneHour = 60 * 60 * 4000;
+  const hourKey = Math.floor(Date.now() / oneHour);
+  const res = await fetch(`${baseUrl}/blog?${params.toString()}?v=${hourKey}`, {
     headers: {
       origin: homeUrl,
-      'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=60',
-      'Vercel-CDN-Cache-Control': 'public, s-maxage=3600',
     },
     cache: 'force-cache',
     next: { revalidate: 60 }, // server cache intent

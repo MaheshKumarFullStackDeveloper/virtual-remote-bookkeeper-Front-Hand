@@ -13,8 +13,17 @@ type BlankHtml = {
   image: string;
 };
 
-const isImageFormat = (url?: string): boolean =>
-  !!url && /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
+const isImageFormat = (url?: string): boolean => {
+  if (!url) return false;
+
+  try {
+    const parsedUrl = new URL(url); // Throws if invalid URL
+    const isValidFormat = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(parsedUrl.pathname);
+    return isValidFormat;
+  } catch {
+    return false;
+  }
+};
 
 export default function LeftSideImageRightSideContactFormView({ content }: AddProps): React.JSX.Element {
   const [contentData, setContentData] = useState<BlankHtml | null>(null);
